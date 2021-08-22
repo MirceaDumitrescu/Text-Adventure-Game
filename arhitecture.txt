@@ -1,5 +1,8 @@
 #### GAME DESIGN ####
 
+Resources: https://donjon.bin.sh/
+
+
 ---------- Task1: Game Concept ----------
 
 Style = Futuristic Dystopia
@@ -18,11 +21,14 @@ Navigation_system = Textual based directions
 --------------
 Areas_Lock = True
 
+#### MAP DESIGN ####
+
+Map design and lore: map.html (open with browser to view it correctly)
+
+
 #### Scope_of_game #### 
 
 Discover the mistery behind the murder of Ardit, the scientist. Arid was the brother of the Medic, lover of the Police officer and best friend of the Tehnician. Embark into this mistery from all three perspectives and see if you can find out who murdered Ardit.
-
-
 
 #### game_ending ####
 
@@ -34,6 +40,12 @@ You do not discover the murderer in time and he kills you before that. There are
  | | |_ |/ _` | '_ ` _ \ / _ \ | |  | \ \ / / _ \ '__| |
  | |__| | (_| | | | | | |  __/ | |__| |\ V /  __/ |  |_|
   \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|  (_)
+
+
+
+  #### possible ways of playing ####
+
+Player may move freely if the dungeon[in our case called hotel] since the action takes place in the hotel where Ardit was murdered. They can access rooms if the doors are unlocked. Some doors will always be locked, some will get unlocked if they finish the puzzle or find the key, from previous rooms. Some rooms are required to get in, some are just optional and just give you a bonus [e.g gives you a gun]. Some rooms contain hints to end the game faster.
                                                         
 
 
@@ -47,10 +59,26 @@ Character Intelect
 Character Charisma
 
 ### Character Actions
-Examine
-Pick up
-Attack
-Run Away/Flee
-Hide
-Interact
-Roll Dice
+Examine [F]
+Pick up [P]
+Attack [A]
+Run Away/Flee [R]
+Hide [H]
+Interact [E]
+Roll Dice [D]
+
+---------- Task3: Development Steps ----------
+
+- Create intro interface
+- Create help menu
+- Create map and zone interface
+- Create interactive text messages
+
+# Tehnical Development
+
+- Create Player Class
+- Create Path methods
+- Create Action methods
+- Create Puzzle methods
+- Create Player Inventory & ability to use items
+- Create Room dictionary with all room information
