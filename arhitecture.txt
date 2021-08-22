@@ -45,7 +45,7 @@ You do not discover the murderer in time and he kills you before that. There are
 
   #### possible ways of playing ####
 
-Player may move freely if the dungeon[in our case called hotel] since the action takes place in the hotel where Ardit was murdered. They can access rooms if the doors are unlocked. Some doors will always be locked, some will get unlocked if they finish the puzzle or find the key, from previous rooms. Some rooms are required to get in, some are just optional and just give you a bonus [e.g gives you a gun]. Some rooms contain hints to end the game faster.
+Player may move freely if the dungeon[in our case called hotel]since the action takes place in the hotel where Ardit was murdered. They can access rooms if the doors are unlocked. Some doors will always be locked, some will get unlocked if they finish the puzzle or find the key, from previous rooms. Some rooms are required to get in, some are just optional and just give you a bonus [e.g gives you a gun]. Some rooms contain hints to end the game faster.
                                                         
 
 
