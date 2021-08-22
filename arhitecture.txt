@@ -5,7 +5,7 @@ Resources: https://donjon.bin.sh/
 
 ---------- Task1: Game Concept ----------
 
-Style = Futuristic Dystopia
+Style = Futuristic Dystopia...
 --------------
 Objective = Complete main quest storyline
 --------------
