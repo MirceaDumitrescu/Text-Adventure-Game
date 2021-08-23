@@ -1,6 +1,7 @@
 import sys
 import time
 import os
+from os import path
 import json
 import math
 from text_input import text_input
@@ -52,6 +53,9 @@ starting_kits = {
                 }
 
 player = {}
+
+if not path.exists('data'):
+    os.mkdir('data')
 
 if not os.path.exists('data/character.json'):
     write('data/character.json', {})
@@ -137,6 +141,8 @@ def setup_game():
         You will start with {starting_potions} potions,
             {starting_bullets} bullets and {starting_keys} keys
             in your inventory!
+
+        The game will start in 5 seconds.....
     """)
     time.sleep(5)
 
@@ -248,8 +254,17 @@ _________________________________________________________
 |________________________________________________________|
     """
     type_sys_text(directions)
-    menu = {"s": player_movement("South"),
-        "n": player_movement("North"),
-        "w": player_movement("West"),
-        "e": player_movement("East")}
-    text_input("> ", menu)
+    answer = input("> ")
+    while not answer in ["s","n","w","e"]:
+        print(directions)
+    if answer == "s":
+        player_movement("South")
+
+    elif answer == "n":
+        player_movement("North")
+
+    elif answer == "w":
+        player_movement("West")
+
+    elif answer == "e":
+        player_movement("East")

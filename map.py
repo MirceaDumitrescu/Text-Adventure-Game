@@ -48,16 +48,18 @@ def player_movement(direction):
     if direction == "North":
         destination = zonemap[myPlayer.location]["NORTH"]
         if not zonemap[myPlayer.location]["NORTH"]:
-            print("There is no location in the North")
+            print("There is no available location in the North")
+            wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("This area of the map is locked. Check for a key nearby.")
+            print("This area of the map is locked. Do you wish to use 1 key to unlock? [Y]/[N]")
+            wrong_direction()
         else:
             myPlayer.location = zonemap[myPlayer.location]["NORTH"]
             welcome()
     elif direction == "South":
         destination = zonemap[myPlayer.location]["SOUTH"]
         if not zonemap[myPlayer.location]["SOUTH"]:
-            print("There is no location in the South")
+            print("There is no available location in the South")
         elif zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
@@ -66,7 +68,7 @@ def player_movement(direction):
     elif direction == "East":
         destination = zonemap[myPlayer.location]["EAST"]
         if not zonemap[myPlayer.location]["EAST"]:
-            print("There is no location in the East")
+            print("There is no available location in the East")
         elif zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
@@ -75,12 +77,35 @@ def player_movement(direction):
     elif direction == "West":
         destination = zonemap[myPlayer.location]["WEST"]
         if not zonemap[myPlayer.location]["WEST"]:
-            print("There is no location in the West")
+            print("There is no available location in the West")
         elif zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
             myPlayer.location = zonemap[myPlayer.location]["WEST"]
             welcome()
+
+def wrong_direction():
+    print("""
+_________________________________________________________
+|                                                        |
+|             Where do you want to go now?               |
+|     [s] South  | [n] North | [w] West | [e] East       |
+|________________________________________________________|
+    """)
+    answer = input("> ")
+    while not answer in ["s","n","w","e"]:
+        print(directions)
+    if answer == "s":
+        player_movement("South")
+
+    elif answer == "n":
+        player_movement("North")
+
+    elif answer == "w":
+        player_movement("West")
+
+    elif answer == "e":
+        player_movement("East")
 
 
 def welcome():
