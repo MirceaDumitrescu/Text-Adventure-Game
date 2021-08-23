@@ -80,6 +80,7 @@ def setup_game():
                 {starting_bullets} bullets and {starting_keys} keys
                 in your inventory!
         """)
+        time.sleep(5)
 
 
 
