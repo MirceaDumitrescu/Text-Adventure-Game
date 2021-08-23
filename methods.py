@@ -1,13 +1,41 @@
 import sys
 import time
 import os
+from os import path
+import json
+import math
 from text_input import text_input
 from inventory import get_inventory
-from inventory import add_inventory
 from map import  player_movement
 from character import Player
 
 myPlayer = Player()
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+def read(file: str):
+    return json.load(open(file))
+def write(file: str, data: dict):
+    with open(file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+##### Defined Function to type words slowly
+def type_sys_text(txt):
+    i = 0
+    speed = 4 #Ronan's prefrence is 30
+    #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
+    # the time.sleep is not fast enought
+    while i < len(txt):
+        delta = len(txt) - i - speed
+        if delta <= 0:
+            speed = speed - abs(delta) #Prevent out of range
+        for b in range(0, speed):
+            sys.stdout.write(txt[i + b])
+            sys.stdout.flush()
+        
+        time.sleep(math.pow(10, -9))
+        i += speed
 
 starting_kits = {
                 "MEDIC": {
@@ -24,94 +52,16 @@ starting_kits = {
                 "KEYS": 3 }
                 }
 
+player = {}
 
-def setup_game():
-    name = input("""
-        _________________________________________    
-        |          WHAT IS YOUR NAME?           |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-                How should we call you?
-    
-    > """).capitalize()
-    #print(f"Your name is {name}")
-    myPlayer.name = name
+if not path.exists('data'):
+    os.mkdir('data')
 
-    selected_kit =  input("""
-        _________________________________________    
-        |           WHAT IS YOUR JOB?           |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-   You can choose between Medic, Police and Tehnician.
-    
-    > """).upper()
-    #print(f"Your job is {selected_kit}")
-    while selected_kit not in starting_kits.keys():
-        selected_kit =  input("""
-        _________________________________________    
-        |     TRY AGAIN! WHAT IS YOUR JOB?      |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-   You can choose between Medic, Police and Tehnician.
- Make sure you type the correct job name as written above!
-    
-    > """).upper()
-    else:
-        #once the player chooses the kit we will store it in selected_kit
-        myPlayer.starting_kit = selected_kit
+if not os.path.exists('data/character.json'):
+    write('data/character.json', {})
+else:
+    player = read('data/character.json')
 
-        #to print their inventories
-        starting_potions = starting_kits[myPlayer.starting_kit]["POTIONS"]
-        starting_bullets = starting_kits[myPlayer.starting_kit]["BULLETS"]
-        starting_keys = starting_kits[myPlayer.starting_kit]["KEYS"]
-
-        print(f"""
-        _________________________________________    
-        |      YOU ARE NOW A {selected_kit}          |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-            You will start with {starting_potions} potions,
-                {starting_bullets} bullets and {starting_keys} keys
-                in your inventory!
-        """)
-        time.sleep(5)
-
-
-
-##### Defined Function to type words slowly
-def type_sys_text(i):
-    for char in i:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.003)
-    # player_input = input("> ")
-    # os.system("clear")
-
-##### Defined Function to call inventory
-### this will have more complex features in the future
-def display_inventory():
-    inventory = f"""
-
-===============================================================
-|                                                              |
-|    Name: {myPlayer.name}      Health: {myPlayer.hp}      Location: {myPlayer.location}         |
-|                                                              |
-===============================================================
-|                                                              |
-|                                                              |
-|                      --- Inventory ---                       |
-|                                                              |
-|                                                              |
-===============================================================
-    [1] {get_inventory("slot1")} Potions                   [4] {get_inventory("slot4")} Letters
-    [2] {get_inventory("slot2")} Bullets                   [5] {get_inventory("slot5")} Clues
-    [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
-
-"""
-    for char in inventory:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.001)
-    # player_input = input("> ")
-    # os.system("clear")
-    time.sleep(5)
-    game_menu()
 
 def welcome():
     welcome = """
@@ -145,7 +95,90 @@ def welcome():
     text_input("> ", menu)
     game_menu()
 
+def setup_game():
+    name = input("""
+        _________________________________________    
+        |          WHAT IS YOUR NAME?           |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+                How should we call you?
+    
+    > """).capitalize()
+    myPlayer.name = name
+    selected_kit =  input("""
+        _________________________________________    
+        |           WHAT IS YOUR JOB?           |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+   You can choose between Medic, Police and Tehnician.
+    
+    > """).upper()
+    #print(f"Your job is {selected_kit}")
+    while selected_kit not in starting_kits.keys():
+        selected_kit =  input("""
+        _________________________________________    
+        |     TRY AGAIN! WHAT IS YOUR JOB?      |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+   You can choose between Medic, Police and Tehnician.
+ Make sure you type the correct job name as written above!
+    
+    > """).upper()
+
+    #once the player chooses the kit we will store it in data/character.json
+    player[selected_kit] = {
+        "potions": starting_kits[selected_kit]["POTIONS"],
+        "bullet": starting_kits[selected_kit]["BULLETS"],
+        "keys": starting_kits[selected_kit]["KEYS"]
+    }
+    write('data/character.json', player)
+    #to print their inventories
+    starting_potions = starting_kits[selected_kit]["POTIONS"]
+    starting_bullets = starting_kits[selected_kit]["BULLETS"]
+    starting_keys = starting_kits[selected_kit]["KEYS"]
+
+    print(f"""
+    _________________________________________    
+    |      YOU ARE NOW A {selected_kit}          |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+        You will start with {starting_potions} potions,
+            {starting_bullets} bullets and {starting_keys} keys
+            in your inventory!
+    """)
+    time.sleep(5)
+
+
+
+
+
+
+##### Defined Function to call inventory
+### this will have more complex features in the future
+def display_inventory():
+    cls()
+    inventory = f"""
+
+===============================================================
+|                                                              |
+|    Name: {myPlayer.name}      Health: {myPlayer.hp}      Location: {myPlayer.location}         |
+|                                                              |
+===============================================================
+|                                                              |
+|                                                              |
+|                      --- Inventory ---                       |
+|                                                              |
+|                                                              |
+===============================================================
+    [1] {get_inventory("slot1")} Potions                   [4] {get_inventory("slot4")} Letters
+    [2] {get_inventory("slot2")} Bullets                   [5] {get_inventory("slot5")} Clues
+    [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
+
+"""
+    type_sys_text(inventory)
+    time.sleep(5)
+    game_menu()
+
+
+
 def help_game():
+    cls()
     help_info = """
 
  ____  ____  ________  _____     _______   
@@ -201,13 +234,16 @@ _________________________________________________________
 |________________________________________________________|
     """
     type_sys_text(game_options)
-    menu = {"m": get_direction,
+    menu = {
+        "m": get_direction,
         "h": help_game,
-        "i": display_inventory,}
+        "i": display_inventory
+        }
     text_input("> ", menu)
 
 
 def get_direction():
+    cls()
     directions = """
 _________________________________________________________
 |                                                        |
