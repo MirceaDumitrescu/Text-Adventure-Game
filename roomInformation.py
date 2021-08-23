@@ -1,0 +1,1 @@
+# Create Room dictionary with all room information
