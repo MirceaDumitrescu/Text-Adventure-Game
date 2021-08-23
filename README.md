@@ -17,3 +17,9 @@ Discover the mistery behind the murder of Ardit, the scientist. Ardit was the br
 Discord: https://discord.gg/WnEBGsUCkd
 
 Visit the architecture.txt file to get a an idea of what we need to do.
+
+Current developers:
+
+Elder > Map & Inventory System
+
+RonanHansel & cinwald > Player Class
