@@ -139,4 +139,4 @@ cython_debug/
 
 #Custom
 test.py
-data.json
+data

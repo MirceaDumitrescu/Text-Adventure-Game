@@ -1,13 +1,20 @@
 import sys
 import time
 import os
+import json
+import math
 from text_input import text_input
 from inventory import get_inventory
-from inventory import add_inventory
 from map import  player_movement
 from character import Player
 
 myPlayer = Player()
+
+def read(file: str):
+    return json.load(open(file))
+def write(file: str, data: dict):
+    with open(file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 starting_kits = {
                 "MEDIC": {
@@ -24,6 +31,13 @@ starting_kits = {
                 "KEYS": 3 }
                 }
 
+player = {}
+
+if not os.path.exists('data/character.json'):
+    write('data/character.json', {})
+else:
+    player = read('data/character.json')
+
 
 def setup_game():
     name = input("""
@@ -33,7 +47,6 @@ def setup_game():
                 How should we call you?
     
     > """).capitalize()
-    #print(f"Your name is {name}")
     myPlayer.name = name
 
     selected_kit =  input("""
@@ -53,35 +66,47 @@ def setup_game():
  Make sure you type the correct job name as written above!
     
     > """).upper()
-    else:
-        #once the player chooses the kit we will store it in selected_kit
-        myPlayer.starting_kit = selected_kit
 
-        #to print their inventories
-        starting_potions = starting_kits[myPlayer.starting_kit]["POTIONS"]
-        starting_bullets = starting_kits[myPlayer.starting_kit]["BULLETS"]
-        starting_keys = starting_kits[myPlayer.starting_kit]["KEYS"]
+    #once the player chooses the kit we will store it in data/character.json
+    player[selected_kit] = {
+        "potions": starting_kits[selected_kit]["POTIONS"],
+        "bullet": starting_kits[selected_kit]["BULLETS"],
+        "keys": starting_kits[selected_kit]["KEYS"]
+    }
+    write('data/character.json', player)
+    #to print their inventories
+    starting_potions = starting_kits[selected_kit]["POTIONS"]
+    starting_bullets = starting_kits[selected_kit]["BULLETS"]
+    starting_keys = starting_kits[selected_kit]["KEYS"]
 
-        print(f"""
-        _________________________________________    
-        |      YOU ARE NOW A {selected_kit}          |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-            You will start with {starting_potions} potions,
-                {starting_bullets} bullets and {starting_keys} keys
-                in your inventory!
-        """)
-        time.sleep(5)
+    print(f"""
+    _________________________________________    
+    |      YOU ARE NOW A {selected_kit}          |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+        You will start with {starting_potions} potions,
+            {starting_bullets} bullets and {starting_keys} keys
+            in your inventory!
+    """)
+    time.sleep(5)
 
 
 
 ##### Defined Function to type words slowly
-def type_sys_text(i):
-    for char in i:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.003)
-    # player_input = input("> ")
-    # os.system("clear")
+def type_sys_text(txt):
+    i = 0
+    speed = 30 #Ronan's prefrence is 30
+    #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
+    # the time.sleep is not fast enought
+    while i < len(txt):
+        delta = len(txt) - i - speed
+        if delta <= 0:
+            speed = speed - abs(delta) #Prevent out of range
+        for b in range(0, speed):
+            sys.stdout.write(txt[i + b])
+            sys.stdout.flush()
+        
+        time.sleep(math.pow(10, -9))
+        i += speed
 
 ##### Defined Function to call inventory
 ### this will have more complex features in the future
@@ -104,10 +129,7 @@ def display_inventory():
     [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
 
 """
-    for char in inventory:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.001)
+    type_sys_text(inventory)
     # player_input = input("> ")
     # os.system("clear")
     time.sleep(5)
