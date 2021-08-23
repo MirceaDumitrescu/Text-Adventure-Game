@@ -27,12 +27,6 @@ LOCKED = False
 #if NPC == True it gets triggered after Examine>Loot>Attack/etc
 NPC = []
 
-#Ways to navigate the maps. If North has value, [up] command will return info about the map above if locked or moved directly.
-NORTH = ""
-SOUTH = ""
-WEST = ""
-EAST = ""
-
 
 #Player selects 1,2,3 or 4 from prompt menu. each value calls for player_movement("North"..etc)
 
@@ -43,29 +37,29 @@ EAST = ""
 #Then calls the method to display player description welcome()
 def player_movement(direction):
     if direction == "North":
-        destination = zonemap[MyPlayer.location][NORTH]
-        if zonemap[destination][LOCKED] is False:
+        destination = zonemap[MyPlayer.location]["NORTH"]
+        if zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
             MyPlayer.location = zonemap[MyPlayer.location][NORTH]
             welcome()
     elif direction == "South":
-        destination = zonemap[MyPlayer.location][SOUTH]
-        if zonemap[destination][LOCKED] is False:
+        destination = zonemap[MyPlayer.location]["SOUTH"]
+        if zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
             MyPlayer.location = zonemap[MyPlayer.location][SOUTH]
             welcome()
     elif direction == "East":
-        destination = zonemap[MyPlayer.location][EAST]
-        if zonemap[destination][LOCKED] is False:
+        destination = zonemap[MyPlayer.location]["EAST"]
+        if zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
             MyPlayer.location = zonemap[MyPlayer.location][EAST]
             welcome()
     elif direction == "West":
-        destination = zonemap[MyPlayer.location][WEST]
-        if zonemap[destination][LOCKED] is False:
+        destination = zonemap[MyPlayer.location]["WEST"]
+        if zonemap[destination]["LOCKED"] is False:
             print("This area of the map is locked. Check for a key nearby.")
         else:
             MyPlayer.location = zonemap[MyPlayer.location][WEST]
@@ -73,8 +67,8 @@ def player_movement(direction):
 
 
 def welcome():
-    destination = zonemap[MyPlayer.position][DESCRIPTION]
-    zonename = zonemap[MyPlayer.position][NAME]
+    destination = zonemap[MyPlayer.position]["DESCRIPTION"]
+    zonename = zonemap[MyPlayer.position]["NAME"]
     print("""
     
     ----------------[{zonename}]---------------
@@ -84,15 +78,15 @@ def welcome():
 
 zonemap = {
           "a1": {
-          NAME: "Home",
-          DESCRIPTION: "description",
-          EXAMINED: True,
-          LOOT: [],
-          ENEMIES: [],
-          LOCKED: False,
-          NPC: [], 
-          NORTH = ""
-          SOUTH = ""
-          WEST = ""
-          EAST = "a2"}
+          "NAME": "Home",
+          "DESCRIPTION": "description",
+          "EXAMINED": True,
+          "LOOT": [],
+          "ENEMIES": [],
+          "LOCKED": False,
+          "NPC": [], 
+          "NORTH" = "",
+          "SOUTH" = "",
+          "WEST" = "",
+          "EAST" = "a2"}
 }
