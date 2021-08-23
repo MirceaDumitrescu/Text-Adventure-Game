@@ -20,4 +20,5 @@ Visit the architecture.txt file to get a an idea of what we need to do.
 
 Current developers:
 Elder > Map & Inventory System
+
 RonanHansel & cinwald > Player Class
