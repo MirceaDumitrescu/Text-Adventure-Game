@@ -23,3 +23,5 @@ Current developers:
 Elder > Map & Inventory System
 
 RonanHansel & cinwald > Player Class
+
+The project supports Python 3.9 and above.
