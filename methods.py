@@ -10,11 +10,31 @@ from character import Player
 
 myPlayer = Player()
 
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 def read(file: str):
     return json.load(open(file))
 def write(file: str, data: dict):
     with open(file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+##### Defined Function to type words slowly
+def type_sys_text(txt):
+    i = 0
+    speed = 30 #Ronan's prefrence is 30
+    #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
+    # the time.sleep is not fast enought
+    while i < len(txt):
+        delta = len(txt) - i - speed
+        if delta <= 0:
+            speed = speed - abs(delta) #Prevent out of range
+        for b in range(0, speed):
+            sys.stdout.write(txt[i + b])
+            sys.stdout.flush()
+        
+        time.sleep(math.pow(10, -9))
+        i += speed
 
 starting_kits = {
                 "MEDIC": {
@@ -39,6 +59,38 @@ else:
     player = read('data/character.json')
 
 
+def welcome():
+    welcome = """
+
+#####################################################
+       _____  __                __               
+      / ___/ / /_   ____ _ ____/ /____  _      __
+      \__ \ / __ \ / __ `// __  // __ \| | /| / /
+     ___/ // / / // /_/ // /_/ // /_/ /| |/ |/ / 
+    /____//_/ /_/ \__,_/ \__,_/ \____/ |__/|__/  
+
+    __  ___                        ____   ____   ______
+   /  |/  /____   ____   ____     / __ \ / __ \ / ____/
+  / /|_/ // __ \ / __ \ / __ \   / /_/ // /_/ // / __  
+ / /  / // /_/ // /_/ // / / /  / _, _// ____// /_/ /  
+/_/  /_/ \____/ \____//_/ /_/  /_/ |_|/_/     \____/   
+                                                       
+######################################################
+           Copyright Python Task Force 2021
+
+                       [1] Play <
+                       [2] Quit <
+"""
+
+##### Calling out the function from methods.py to type the welcome message when program run
+
+    type_sys_text(welcome)
+    menu = {"1": setup_game,
+        "2": sys.exit
+       }
+    text_input("> ", menu)
+    game_menu()
+
 def setup_game():
     name = input("""
         _________________________________________    
@@ -48,7 +100,6 @@ def setup_game():
     
     > """).capitalize()
     myPlayer.name = name
-
     selected_kit =  input("""
         _________________________________________    
         |           WHAT IS YOUR JOB?           |
@@ -91,26 +142,13 @@ def setup_game():
 
 
 
-##### Defined Function to type words slowly
-def type_sys_text(txt):
-    i = 0
-    speed = 30 #Ronan's prefrence is 30
-    #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
-    # the time.sleep is not fast enought
-    while i < len(txt):
-        delta = len(txt) - i - speed
-        if delta <= 0:
-            speed = speed - abs(delta) #Prevent out of range
-        for b in range(0, speed):
-            sys.stdout.write(txt[i + b])
-            sys.stdout.flush()
-        
-        time.sleep(math.pow(10, -9))
-        i += speed
+
+
 
 ##### Defined Function to call inventory
 ### this will have more complex features in the future
 def display_inventory():
+    cls()
     inventory = f"""
 
 ===============================================================
@@ -130,44 +168,13 @@ def display_inventory():
 
 """
     type_sys_text(inventory)
-    # player_input = input("> ")
-    # os.system("clear")
     time.sleep(5)
     game_menu()
 
-def welcome():
-    welcome = """
 
-#####################################################
-       _____  __                __               
-      / ___/ / /_   ____ _ ____/ /____  _      __
-      \__ \ / __ \ / __ `// __  // __ \| | /| / /
-     ___/ // / / // /_/ // /_/ // /_/ /| |/ |/ / 
-    /____//_/ /_/ \__,_/ \__,_/ \____/ |__/|__/  
-
-    __  ___                        ____   ____   ______
-   /  |/  /____   ____   ____     / __ \ / __ \ / ____/
-  / /|_/ // __ \ / __ \ / __ \   / /_/ // /_/ // / __  
- / /  / // /_/ // /_/ // / / /  / _, _// ____// /_/ /  
-/_/  /_/ \____/ \____//_/ /_/  /_/ |_|/_/     \____/   
-                                                       
-######################################################
-           Copyright Python Task Force 2021
-
-                       [1] Play <
-                       [2] Quit <
-"""
-
-##### Calling out the function from methods.py to type the welcome message when program run
-
-    type_sys_text(welcome)
-    menu = {"1": setup_game,
-        "2": sys.exit
-       }
-    text_input("> ", menu)
-    game_menu()
 
 def help_game():
+    cls()
     help_info = """
 
  ____  ____  ________  _____     _______   
@@ -223,13 +230,16 @@ _________________________________________________________
 |________________________________________________________|
     """
     type_sys_text(game_options)
-    menu = {"m": get_direction,
+    menu = {
+        "m": get_direction,
         "h": help_game,
-        "i": display_inventory,}
+        "i": display_inventory
+        }
     text_input("> ", menu)
 
 
 def get_direction():
+    cls()
     directions = """
 _________________________________________________________
 |                                                        |
