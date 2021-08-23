@@ -1,8 +1,22 @@
+class Player():
+    def __init__(self):
+        self.name = ""
+        self.hp = 50
+        self.starting_kit = ""
+        self.stamina = 100
+        self.intelect = 100
+        self.charisma = 10
+        self.location = "a1"
+myPlayer = Player()
+#now you can call methods like: myPlayer.location
 
 
 
-note this is not finished and will be recoded because of the identation problem that came from another IDE, and also semplified with Methods instead of classes
-you can continue work, ignore this section.
+
+
+
+# note this is not finished and will be recoded because of the identation problem that came from another IDE, and also semplified with Methods instead of classes
+# you can continue work, ignore this section.
 
 
 

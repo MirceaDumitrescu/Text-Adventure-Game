@@ -4,20 +4,10 @@ import os
 from text_input import text_input
 from inventory import get_inventory
 from inventory import add_inventory
+from map import  player_movement
+from character import Player
 
-
-class Player():
-    def __init__(self):
-        self.name = ""
-        self.hp = 50
-        self.starting_kit = ""
-        self.stamina = 100
-        self.intelect = 100
-        self.charisma = 10
-        self.location = "a1"
-#now you can call methods like: myPlayer.location
 myPlayer = Player()
-
 
 starting_kits = {
                 "MEDIC": {
@@ -211,8 +201,23 @@ _________________________________________________________
 |________________________________________________________|
     """
     type_sys_text(game_options)
-    menu = {"m": "move",
+    menu = {"m": get_direction,
         "h": help_game,
-        "i": display_inventory,
-       }
+        "i": display_inventory,}
+    text_input("> ", menu)
+
+
+def get_direction():
+    directions = """
+_________________________________________________________
+|                                                        |
+|             Where do you want to go now?               |
+|     [s] South  | [n] North | [w] West | [e] East       |
+|________________________________________________________|
+    """
+    type_sys_text(directions)
+    menu = {"s": player_movement("South"),
+        "n": player_movement("North"),
+        "w": player_movement("West"),
+        "e": player_movement("East")}
     text_input("> ", menu)
