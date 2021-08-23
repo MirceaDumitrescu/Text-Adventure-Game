@@ -1,6 +1,5 @@
 import sys
 import time
-import os
 from os import path
 import json
 import math
@@ -55,8 +54,7 @@ starting_kits = {
 player = {}
 
 if not path.exists('data'):
-    os.mkdir('data')
-
+   os.mkdir('data')
 if not os.path.exists('data/character.json'):
     write('data/character.json', {})
 else:
