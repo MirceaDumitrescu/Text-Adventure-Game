@@ -10,7 +10,7 @@ A group project by the Python TASK Force
 
 ######################################################
 
-Scope_of_game
+GAME CONCEPT
 
 Discover the mistery behind the murder of Ardit, the scientist. Ardit was the brother of the Medic, lover of the Police officer and best friend of the Tehnician. Embark into this mistery from all three perspectives and see if you can find out who murdered Ardit.
 
