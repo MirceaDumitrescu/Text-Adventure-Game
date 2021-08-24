@@ -33,7 +33,6 @@ def type_text(txt):
         for b in range(0, speed):
             sys.stdout.write(txt[i + b])
             sys.stdout.flush()
-        
         time.sleep(math.pow(10, -3)) #delay between when the chars are written
         i += speed
 
@@ -42,6 +41,7 @@ def loading(delay: int, text: str):
     # you can add blank spaces to the begining and the end of the variable to make it divisable
     if len(text) % delay != 0:
         raise ValueError('Text length must be divisable to delay')
+
     i = 0
     t = 0
     while t <= delay:
@@ -54,24 +54,32 @@ def loading(delay: int, text: str):
         if t != delay: time.sleep(1)
 
 starting_kits = {
-                "MEDIC": {
+            "MEDIC": {
                 "POTIONS": 3,
                 "BULLETS": 1,
-                "KEYS": 1 },
-                "POLICE": {
+                "KEYS": 1,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 },
+            "POLICE": {
                 "POTIONS": 1,
                 "BULLETS": 3,
-                "KEYS": 1 },
-                "TEHNICIAN": {
+                "KEYS": 1,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 },
+            "TEHNICIAN": {
                 "POTIONS": 1,
                 "BULLETS": 1,
-                "KEYS": 3 }
+                "KEYS": 3,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 }
                 }
 
 player = {}
 
-#TODO: Need rework for the 'loading' variable
-loads = ">>==============================================<<"
+loads = "Loading [▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100% "
 
 if not path.exists('data'):
     os.mkdir('data')
@@ -141,13 +149,19 @@ def setup_game():
     player[selected_kit] = {
         "potions": starting_kits[selected_kit]["POTIONS"],
         "bullet": starting_kits[selected_kit]["BULLETS"],
-        "keys": starting_kits[selected_kit]["KEYS"]
+        "keys": starting_kits[selected_kit]["KEYS"],
+        "clues": starting_kits[selected_kit]["CLUES"],
+        "letter": starting_kits[selected_kit]["LETTERS"],
+        "food": starting_kits[selected_kit]["FOOD"]
     }
     write('data/character.json', player)
     #to print their inventories
     starting_potions = starting_kits[selected_kit]["POTIONS"]
     starting_bullets = starting_kits[selected_kit]["BULLETS"]
     starting_keys = starting_kits[selected_kit]["KEYS"]
+    starting_clues= starting_kits[selected_kit]["CLUES"]
+    starting_letters = starting_kits[selected_kit]["LETTERS"]
+    starting_food = starting_kits[selected_kit]["FOOD"]
 
     type_text(f"""
         ╔. ~༻༺~ .═══════════════════════════════╗
@@ -181,9 +195,9 @@ def display_inventory():
 |                                                              |
 |                                                              |
 ===============================================================
-    [1] {get_inventory("slot1")} Potions                   [4] {get_inventory("slot4")} Letters
-    [2] {get_inventory("slot2")} Bullets                   [5] {get_inventory("slot5")} Clues
-    [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
+    [1] {get_inventory(myPlayer.starting_kit,"potions")} Potions                   [4] {get_inventory(myPlayer.starting_kit,"letter")} Letters
+    [2] {get_inventory(myPlayer.starting_kit,"bullet")} Bullets                   [5] {get_inventory(myPlayer.starting_kit,"clues")} Clues
+    [3] {get_inventory(myPlayer.starting_kit,"keys")} Keys                      [6] {get_inventory(myPlayer.starting_kit,"food")} Apples
 
 """
     type_text(inventory)

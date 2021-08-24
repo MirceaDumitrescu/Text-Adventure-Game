@@ -1,4 +1,7 @@
 from character import Player
+from inventory import get_inventory
+from inventory import set_inventory
+from inventory import get_job
 
 
 
@@ -48,10 +51,10 @@ def player_movement(direction):
     if direction == "North":
         destination = zonemap[myPlayer.location]["NORTH"]
         if not zonemap[myPlayer.location]["NORTH"]:
-            print("There is no available location in the North")
+            print("---------There is no available location in the North---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("This area of the map is locked. Do you wish to use 1 key to unlock? [Y]/[N]")
+            print("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
             myPlayer.location = zonemap[myPlayer.location]["NORTH"]
@@ -59,27 +62,33 @@ def player_movement(direction):
     elif direction == "South":
         destination = zonemap[myPlayer.location]["SOUTH"]
         if not zonemap[myPlayer.location]["SOUTH"]:
-            print("There is no available location in the South")
+            print("---------There is no available location in the South---------")
+            wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("This area of the map is locked. Check for a key nearby.")
+            print("---------[!] This area of the map is locked. [!]---------")
+            wrong_direction()
         else:
             myPlayer.location = zonemap[myPlayer.location]["SOUTH"]
             welcome()
     elif direction == "East":
         destination = zonemap[myPlayer.location]["EAST"]
         if not zonemap[myPlayer.location]["EAST"]:
-            print("There is no available location in the East")
+            print("---------There is no available location in the East---------")
+            wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("This area of the map is locked. Check for a key nearby.")
+            print("---------[!] This area of the map is locked. [!]---------")
+            unlock(destination)
         else:
             myPlayer.location = zonemap[myPlayer.location]["EAST"]
             welcome()
     elif direction == "West":
         destination = zonemap[myPlayer.location]["WEST"]
         if not zonemap[myPlayer.location]["WEST"]:
-            print("There is no available location in the West")
+            print("---------There is no available location in the West---------")
+            wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("This area of the map is locked. Check for a key nearby.")
+            print("---------[!] This area of the map is locked. [!]---------")
+            wrong_direction()
         else:
             myPlayer.location = zonemap[myPlayer.location]["WEST"]
             welcome()
@@ -94,7 +103,8 @@ _________________________________________________________
     """)
     answer = input("> ")
     while not answer in ["s","n","w","e"]:
-        print(directions)
+        print("------Please select from the available directions above------")
+        answer = input("> ")
     if answer == "s":
         player_movement("South")
 
@@ -108,15 +118,51 @@ _________________________________________________________
         player_movement("East")
 
 
+def unlock(destination):
+    print('''
+   ad8888888888ba
+  dP'         `"8b,
+  8  ,aaa,       "Y888a     ,aaaa,     ,aaa,  ,aa,
+  8  8' `8           "8baaaad""""baaaad""""baad""8b
+  8  8   8              """"      """"      ""    8b
+  8  8, ,8         ,aaaaaaaaaaaaaaaaaaaaaaaaddddd88P
+  8  `"""'       ,d8""
+  Yb,         ,ad8"  
+   "Y8888888888P"
+
+  [!] Do you want to use a key and unlock the door?
+
+                    > [yes]
+                    > [no]
+    ''')
+    answer = input("> ").lower()
+    while not answer in ["yes", "no"]:
+        print("------Please select from the available options above------")
+        answer = input("> ").lower()
+    if answer == "yes":
+      #check for key in inventory
+      slot3 = int(get_inventory(get_job(), "keys"))
+      if slot3 > 0:
+        new_slot = slot3 - 1
+        set_inventory(get_job(), "keys", new_slot)
+        zonemap[destination]["LOCKED"] = False
+        myPlayer.location = destination
+        welcome()
+      else:
+        print ("-------[!] You do not have a key to unlock this area! [!]-------")
+        wrong_direction()
+    elif answer == "no":
+      wrong_direction()
+
+
 def welcome():
-    destination = zonemap[myPlayer.position]["DESCRIPTION"]
-    zonename = zonemap[myPlayer.position]["NAME"]
-    print("""
+    description = zonemap[myPlayer.location]["DESCRIPTION"]
+    print(f"""
     
-    ----------------[{zonename}]---------------
-    {destination}
+    ----------------[{myPlayer.location}]---------------
+    {description}
     
-    """.format(zonename, destination))
+    """)
 
 zonemap = {
             "a1": {
