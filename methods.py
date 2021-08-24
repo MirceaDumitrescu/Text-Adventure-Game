@@ -38,7 +38,6 @@ def type_sys_text(txt):
         i += speed
 
 def loading(delay: int, text: str):
-    #TODO: Need rework for the 'loading' variable
     #horizontal length should be divisable to delay, if not, 
     # you can add blank spaces to the begining and the end of the variable to make it divisable
     i = 0
@@ -69,6 +68,7 @@ starting_kits = {
 
 player = {}
 
+#TODO: Need rework for the 'loading' variable
 loads = ">>==============================================<<"
 
 if not path.exists('data'):
