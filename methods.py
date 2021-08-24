@@ -20,7 +20,7 @@ def write(file: str, data: dict):
     with open(file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-##### Defined Function to type words slowly
+##### Define Function to type words slowly
 def type_sys_text(txt):
     i = 0
     speed = 5
@@ -102,9 +102,6 @@ def welcome():
                        [1] Play <
                        [2] Quit <
 """
-
-##### Calling out the function from methods.py to type the welcome message when program run
-
     type_sys_text(welcome)
     menu = {"1": setup_game,
         "2": sys.exit
@@ -128,7 +125,6 @@ def setup_game():
    You can choose between Medic, Police and Tehnician.
     
     > """).upper()
-    #print(f"Your job is {selected_kit}")
     while selected_kit not in starting_kits.keys():
         selected_kit =  input("""
         _________________________________________    
@@ -269,8 +265,9 @@ _________________________________________________________
     """
     type_sys_text(directions)
     answer = input("> ")
-    while not answer in ["s","n","w","e"]:
-        print(directions)
+    while not answer.lower() in ["s","n","w","e"]:
+        print("------Please select from the available directions above------")
+        answer = input("> ")
     if answer == "s":
         player_movement("South")
 
