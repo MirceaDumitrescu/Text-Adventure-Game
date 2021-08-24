@@ -5,20 +5,14 @@ from os import path
 import json
 import math
 from text_input import text_input
-from inventory import get_inventory
-from map import  player_movement
-from character import Player
+from map import  *
+from character import *
 
 myPlayer = Player()
 
+
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
-
-def read(file: str):
-    return json.load(open(file))
-def write(file: str, data: dict):
-    with open(file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
 
 ##### Define Function to type words slowly
 def type_text(txt):
@@ -79,15 +73,7 @@ starting_kits = {
 
 player = {}
 
-loads = "Loading [▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100% "
-
-if not path.exists('data'):
-    os.mkdir('data')
-
-if not os.path.exists('data/character.json'):
-    write('data/character.json', {})
-else:
-    player = read('data/character.json')
+loads = "Loading [▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100%"
 
 
 def welcome():
@@ -144,7 +130,8 @@ def setup_game():
  Make sure you type the correct job name as written above!
     """)
         selected_kit = input("> ").upper()
-
+    else:
+        myPlayer.starting_kit = selected_kit
     #once the player chooses the kit we will store it in data/character.json
     player[selected_kit] = {
         "potions": starting_kits[selected_kit]["POTIONS"],
@@ -152,7 +139,7 @@ def setup_game():
         "keys": starting_kits[selected_kit]["KEYS"],
         "clues": starting_kits[selected_kit]["CLUES"],
         "letter": starting_kits[selected_kit]["LETTERS"],
-        "food": starting_kits[selected_kit]["FOOD"]
+        "food": starting_kits[selected_kit]["FOOD"],
     }
     write('data/character.json', player)
     #to print their inventories
@@ -165,7 +152,7 @@ def setup_game():
 
     type_text(f"""
         ╔. ~༻༺~ .═══════════════════════════════╗
-                YOU ARE NOW A {selected_kit}
+                YOU ARE NOW A {myPlayer.starting_kit}
         ╚═══════════════════════════════. ~༻༺~ .╝
 
             You will start with {starting_potions} potions,
@@ -174,13 +161,15 @@ def setup_game():
 
         The game will start in 5 seconds.....
     """)
-    
+
     loading(delay=5, text=loads)
+
 
 
 ##### Defined Function to call inventory
 ### this will have more complex features in the future
 def display_inventory():
+    job = get_job()
     cls()
     inventory = f"""
 
@@ -195,16 +184,16 @@ def display_inventory():
 |                                                              |
 |                                                              |
 ===============================================================
-    [1] {get_inventory(myPlayer.starting_kit,"potions")} Potions                   [4] {get_inventory(myPlayer.starting_kit,"letter")} Letters
-    [2] {get_inventory(myPlayer.starting_kit,"bullet")} Bullets                   [5] {get_inventory(myPlayer.starting_kit,"clues")} Clues
-    [3] {get_inventory(myPlayer.starting_kit,"keys")} Keys                      [6] {get_inventory(myPlayer.starting_kit,"food")} Apples
+    [1] {get_inventory(job, "potions")} Potions                   [4] {get_inventory(job, "letter")} Letters
+    [2] {get_inventory(job, "bullet")} Bullets                   [5] {get_inventory(job, "clues")} Clues
+    [3] {get_inventory(job, "keys")} Keys                      [6] {get_inventory(job, "food")} Apples
 
 """
     type_text(inventory)
     loading(5, loads)
     game_menu()
 
-
+print(myPlayer.starting_kit)
 
 def help_game():
     cls()
@@ -252,7 +241,7 @@ and see if you can find out who murdered Ardit.
 
 
 def game_menu():
-    game_options = """
+    game_options = f"""
 __________________________________________________________
 |                                                        |
 |             What do you want to do next?               |

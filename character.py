@@ -1,3 +1,25 @@
+import json
+import os
+from os import path
+
+
+def read(file: str):
+    return json.load(open(file))
+def write(file: str, data: dict):
+    with open(file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+def create_json():
+    if not path.exists('data'):
+        os.mkdir('data')
+    if not os.path.exists('data/character.json'):
+        write('data/character.json', {})
+    else:
+        os.remove('data/character.json') #Added step to delete and recreate file every time game is ran
+        write('data/character.json', {})
+        player = read('data/character.json')
+
+
 class Player():
     def __init__(self):
         self.name = ""
@@ -8,7 +30,25 @@ class Player():
         self.charisma = 10
         self.location = "a1"
 myPlayer = Player()
-#now you can call methods like: myPlayer.location
+
+
+with open("data/character.json", "r+") as f:
+    player_inventory = json.load(f)
+
+def set_job(key):
+    myPlayer.starting_kit = key
+
+def get_job():
+    res = list(player_inventory.keys())[0]
+    return res
+
+    #method to get item in slot
+def get_inventory(job, key):
+    return player_inventory[job][key]
+
+#method to add items to inventory
+def set_inventory(job, key, value):
+    player_inventory[job][key] = value
 
 
 

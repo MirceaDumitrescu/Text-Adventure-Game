@@ -1,7 +1,6 @@
-from character import Player
-from inventory import get_inventory
-from inventory import set_inventory
-from inventory import get_job
+from character import *
+from inventory import *
+from methods import *
 
 
 
@@ -16,27 +15,7 @@ from inventory import get_job
 #   |      |       |   
 #  b4--b3--b2--c1--c2--e1--e2--e3
 
-### return upon entry
-NAME = ""
-DESCRIPTION = ""
-
-### gets checked when [Examine] action triggered
-EXAMINED = False
-
-#if map has loot the Examine action collets
-LOOT = []
-
-#if map has ENEMIES the Examine action triggers enemies
-ENEMIES = []
-
-#checks before entry. Can be unlocked with key from inventory
-LOCKED = False
-
-#if NPC == True it gets triggered after Examine>Loot>Attack/etc
-NPC = []
-
 myPlayer = Player()
-
 
 
 #Player selects 1,2,3 or 4 from prompt menu. each value calls for player_movement("North"..etc)
@@ -119,6 +98,7 @@ _________________________________________________________
 
 
 def unlock(destination):
+    job = get_job()
     print('''
    ad8888888888ba
   dP'         `"8b,
@@ -141,10 +121,10 @@ def unlock(destination):
         answer = input("> ").lower()
     if answer == "yes":
       #check for key in inventory
-      slot3 = int(get_inventory(get_job(), "keys"))
+      slot3 = int(get_inventory(job,"keys"))
       if slot3 > 0:
         new_slot = slot3 - 1
-        set_inventory(get_job(), "keys", new_slot)
+        set_inventory(job, "keys", new_slot)
         zonemap[destination]["LOCKED"] = False
         myPlayer.location = destination
         welcome()
@@ -163,6 +143,7 @@ def welcome():
     {description}
     
     """)
+    game_menu()
 
 zonemap = {
             "a1": {
