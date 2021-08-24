@@ -20,12 +20,12 @@ def write(file: str, data: dict):
     with open(file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-##### Defined Function to type words slowly
+##### Define Function to type words slowly
 def type_sys_text(txt):
     i = 0
-    speed = 30 #Ronan's prefrence is 30
+    speed = 1
     #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
-    # the time.sleep is not fast enought
+    #if the time.sleep is not fast/slow enought
     while i < len(txt):
         delta = len(txt) - i - speed
         if delta <= 0:
@@ -34,25 +34,50 @@ def type_sys_text(txt):
             sys.stdout.write(txt[i + b])
             sys.stdout.flush()
         
-        time.sleep(math.pow(10, -9))
+        time.sleep(math.pow(8, -3)) #delay between when the chars are written
         i += speed
 
+def loading(delay: int, text: str):
+    #horizontal length should be divisable to delay, if not, 
+    # you can add blank spaces to the begining and the end of the variable to make it divisable
+    i = 0
+    t = 0
+    while t <= delay:
+        delta = int(len(text) / delay)
+        n = i + delta
+        sys.stdout.write(text[i:n])
+        sys.stdout.flush()
+        i = n
+        t += 1
+        if t != delay: time.sleep(1)
+
 starting_kits = {
-                "MEDIC": {
+            "MEDIC": {
                 "POTIONS": 3,
                 "BULLETS": 1,
-                "KEYS": 1 },
-                "POLICE": {
+                "KEYS": 1,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 },
+            "POLICE": {
                 "POTIONS": 1,
                 "BULLETS": 3,
-                "KEYS": 1 },
-                "TEHNICIAN": {
+                "KEYS": 1,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 },
+            "TEHNICIAN": {
                 "POTIONS": 1,
                 "BULLETS": 1,
-                "KEYS": 3 }
+                "KEYS": 3,
+                "CLUES": 0,
+                "LETTERS": 0,
+                "FOOD": 0 }
                 }
 
 player = {}
+
+loads = "Loading [▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100% "
 
 if not path.exists('data'):
     os.mkdir('data')
@@ -85,9 +110,6 @@ def welcome():
                        [1] Play <
                        [2] Quit <
 """
-
-##### Calling out the function from methods.py to type the welcome message when program run
-
     type_sys_text(welcome)
     menu = {"1": setup_game,
         "2": sys.exit
@@ -111,7 +133,6 @@ def setup_game():
    You can choose between Medic, Police and Tehnician.
     
     > """).upper()
-    #print(f"Your job is {selected_kit}")
     while selected_kit not in starting_kits.keys():
         selected_kit =  input("""
         _________________________________________    
@@ -121,18 +142,26 @@ def setup_game():
  Make sure you type the correct job name as written above!
     
     > """).upper()
+    else:
+        myPlayer.starting_kit = selected_kit
 
     #once the player chooses the kit we will store it in data/character.json
     player[selected_kit] = {
         "potions": starting_kits[selected_kit]["POTIONS"],
         "bullet": starting_kits[selected_kit]["BULLETS"],
-        "keys": starting_kits[selected_kit]["KEYS"]
+        "keys": starting_kits[selected_kit]["KEYS"],
+        "clues": starting_kits[selected_kit]["CLUES"],
+        "letter": starting_kits[selected_kit]["LETTERS"],
+        "food": starting_kits[selected_kit]["FOOD"]
     }
     write('data/character.json', player)
     #to print their inventories
     starting_potions = starting_kits[selected_kit]["POTIONS"]
     starting_bullets = starting_kits[selected_kit]["BULLETS"]
     starting_keys = starting_kits[selected_kit]["KEYS"]
+    starting_clues= starting_kits[selected_kit]["CLUES"]
+    starting_letters = starting_kits[selected_kit]["LETTERS"]
+    starting_food = starting_kits[selected_kit]["FOOD"]
 
     print(f"""
     _________________________________________    
@@ -144,11 +173,8 @@ def setup_game():
 
         The game will start in 5 seconds.....
     """)
-    time.sleep(5)
-
-
-
-
+    
+    loading(delay=5, text=loads)
 
 
 ##### Defined Function to call inventory
@@ -168,13 +194,13 @@ def display_inventory():
 |                                                              |
 |                                                              |
 ===============================================================
-    [1] {get_inventory("slot1")} Potions                   [4] {get_inventory("slot4")} Letters
-    [2] {get_inventory("slot2")} Bullets                   [5] {get_inventory("slot5")} Clues
-    [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
+    [1] {get_inventory(myPlayer.starting_kit,"potions")} Potions                   [4] {get_inventory(myPlayer.starting_kit,"letter")} Letters
+    [2] {get_inventory(myPlayer.starting_kit,"bullet")} Bullets                   [5] {get_inventory(myPlayer.starting_kit,"clues")} Clues
+    [3] {get_inventory(myPlayer.starting_kit,"keys")} Keys                      [6] {get_inventory(myPlayer.starting_kit,"food")} Apples
 
 """
     type_sys_text(inventory)
-    time.sleep(5)
+    loading(5, loads)
     game_menu()
 
 
@@ -223,7 +249,7 @@ The game will continue in 5 seconds... Please read carefully
 
   """
     type_sys_text(help_info)
-    time.sleep(5)
+    loading(5, loads)
     game_menu()
 
 
@@ -255,8 +281,9 @@ _________________________________________________________
     """
     type_sys_text(directions)
     answer = input("> ")
-    while not answer in ["s","n","w","e"]:
-        print(directions)
+    while not answer.lower() in ["s","n","w","e"]:
+        print("------Please select from the available directions above------")
+        answer = input("> ")
     if answer == "s":
         player_movement("South")
 
