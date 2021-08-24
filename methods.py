@@ -21,9 +21,9 @@ def write(file: str, data: dict):
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 ##### Define Function to type words slowly
-def type_sys_text(txt):
+def type_text(txt):
     i = 0
-    speed = 5
+    speed = 6
     #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
     #if the time.sleep is not fast/slow enought
     while i < len(txt):
@@ -38,8 +38,10 @@ def type_sys_text(txt):
         i += speed
 
 def loading(delay: int, text: str):
-    #horizontal length should be divisable to delay, if not, 
+    #Length should be divisable to delay, if not, 
     # you can add blank spaces to the begining and the end of the variable to make it divisable
+    if len(text) % delay != 0:
+        raise ValueError('Text length must be divisable to delay')
     i = 0
     t = 0
     while t <= delay:
@@ -102,7 +104,7 @@ def welcome():
                        [1] Play <
                        [2] Quit <
 """
-    type_sys_text(welcome)
+    type_text(welcome)
     menu = {"1": setup_game,
         "2": sys.exit
        }
@@ -110,30 +112,30 @@ def welcome():
     game_menu()
 
 def setup_game():
-    name = input("""
+    type_text("""
         _________________________________________    
         |          WHAT IS YOUR NAME?           |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
                 How should we call you?
-    
-    > """).capitalize()
+    """)
+    name = input("> ").capitalize()
     myPlayer.name = name
-    selected_kit =  input("""
+    type_text("""
         _________________________________________    
         |           WHAT IS YOUR JOB?           |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
    You can choose between Medic, Police and Tehnician.
-    
-    > """).upper()
+    """)
+    selected_kit = input("> ").upper()
     while selected_kit not in starting_kits.keys():
-        selected_kit =  input("""
+        type_text("""
         _________________________________________    
         |     TRY AGAIN! WHAT IS YOUR JOB?      |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
    You can choose between Medic, Police and Tehnician.
  Make sure you type the correct job name as written above!
-    
-    > """).upper()
+    """)
+        selected_kit = input("> ").upper()
 
     #once the player chooses the kit we will store it in data/character.json
     player[selected_kit] = {
@@ -147,13 +149,14 @@ def setup_game():
     starting_bullets = starting_kits[selected_kit]["BULLETS"]
     starting_keys = starting_kits[selected_kit]["KEYS"]
 
-    print(f"""
-    _________________________________________    
-    |      YOU ARE NOW A {selected_kit}          |
-    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-        You will start with {starting_potions} potions,
-            {starting_bullets} bullets and {starting_keys} keys
-            in your inventory!
+    type_text(f"""
+        ╔. ~༻༺~ .═══════════════════════════════╗
+                YOU ARE NOW A {selected_kit}
+        ╚═══════════════════════════════. ~༻༺~ .╝
+
+            You will start with {starting_potions} potions,
+                {starting_bullets} bullets and {starting_keys} keys
+                in your inventory!
 
         The game will start in 5 seconds.....
     """)
@@ -169,7 +172,7 @@ def display_inventory():
 
 ===============================================================
 |                                                              |
-|    Name: {myPlayer.name}      Health: {myPlayer.hp}      Location: {myPlayer.location}         |
+    Name: {myPlayer.name}      Health: {myPlayer.hp}      Location: {myPlayer.location}         
 |                                                              |
 ===============================================================
 |                                                              |
@@ -183,7 +186,7 @@ def display_inventory():
     [3] {get_inventory("slot3")} Keys                      [6] {get_inventory("slot6")} Apples
 
 """
-    type_sys_text(inventory)
+    type_text(inventory)
     loading(5, loads)
     game_menu()
 
@@ -228,24 +231,21 @@ and see if you can find out who murdered Ardit.
    Once you reach the last room and solve the puzzle 
         (without getting killed in the process) 
               you will finish the game.
-############################################################
-The game will continue in 5 seconds... Please read carefully
-
   """
-    type_sys_text(help_info)
+    type_text(help_info)
     loading(5, loads)
     game_menu()
 
 
 def game_menu():
     game_options = """
-_________________________________________________________
+__________________________________________________________
 |                                                        |
 |             What do you want to do next?               |
 |   [m] Change Location | [h] Help Menu | [i] Inventory  |
 |________________________________________________________|
     """
-    type_sys_text(game_options)
+    type_text(game_options)
     menu = {
         "m": get_direction,
         "h": help_game,
@@ -263,7 +263,7 @@ _________________________________________________________
 |     [s] South  | [n] North | [w] West | [e] East       |
 |________________________________________________________|
     """
-    type_sys_text(directions)
+    type_text(directions)
     answer = input("> ")
     while not answer.lower() in ["s","n","w","e"]:
         print("------Please select from the available directions above------")
