@@ -23,9 +23,9 @@ def write(file: str, data: dict):
 ##### Defined Function to type words slowly
 def type_sys_text(txt):
     i = 0
-    speed = 30 #Ronan's prefrence is 30
+    speed = 5
     #This to write {speed} chars at once since the limitation of float number is 10^-9 aka, 
-    # the time.sleep is not fast enought
+    #if the time.sleep is not fast/slow enought
     while i < len(txt):
         delta = len(txt) - i - speed
         if delta <= 0:
@@ -34,8 +34,23 @@ def type_sys_text(txt):
             sys.stdout.write(txt[i + b])
             sys.stdout.flush()
         
-        time.sleep(math.pow(10, -9))
+        time.sleep(math.pow(10, -3)) #delay between when the chars are written
         i += speed
+
+def loading(delay: int, text: str):
+    #TODO: Need rework for the 'loading' variable
+    #horizontal length should be divisable to delay, if not, 
+    # you can add blank spaces to the begining and the end of the variable to make it divisable
+    i = 0
+    t = 0
+    while t <= delay:
+        delta = int(len(text) / delay)
+        n = i + delta
+        sys.stdout.write(text[i:n])
+        sys.stdout.flush()
+        i = n
+        t += 1
+        if t != delay: time.sleep(1)
 
 starting_kits = {
                 "MEDIC": {
@@ -53,6 +68,8 @@ starting_kits = {
                 }
 
 player = {}
+
+loads = ">>==============================================<<"
 
 if not path.exists('data'):
     os.mkdir('data')
@@ -144,11 +161,8 @@ def setup_game():
 
         The game will start in 5 seconds.....
     """)
-    time.sleep(5)
-
-
-
-
+    
+    loading(delay=5, text=loads)
 
 
 ##### Defined Function to call inventory
@@ -174,7 +188,7 @@ def display_inventory():
 
 """
     type_sys_text(inventory)
-    time.sleep(5)
+    loading(5, loads)
     game_menu()
 
 
@@ -223,7 +237,7 @@ The game will continue in 5 seconds... Please read carefully
 
   """
     type_sys_text(help_info)
-    time.sleep(5)
+    loading(5, loads)
     game_menu()
 
 
