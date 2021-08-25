@@ -3,6 +3,8 @@ from text_input import text_input
 import screens.directions as m
 import screens.help as h
 import screens.inventory as i
+
+
 def game_menu():
     game_options = f"""
 __________________________________________________________
@@ -12,9 +14,5 @@ __________________________________________________________
 |________________________________________________________|
     """
     type_text(game_options)
-    menu = {
-        "m": m.get_direction,
-        "h": h.help_game,
-        "i": i.display_inventory
-        }
+    menu = {"m": m.get_direction, "h": h.help_game, "i": i.display_inventory}
     text_input("> ", menu)

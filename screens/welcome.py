@@ -6,6 +6,7 @@ from screens.menu import game_menu
 
 player = {}
 
+
 def welcome():
     welcome = """
 
@@ -29,39 +30,48 @@ def welcome():
                        [2] Quit <
 """
     type_text(welcome)
-    menu = {"1": setup_game,
-        "2": sys.exit
-       }
+    menu = {"1": setup_game, "2": sys.exit}
     text_input("> ", menu)
     game_menu()
 
+
 def setup_game():
-    type_text("""
-        _________________________________________    
-        |          WHAT IS YOUR NAME?           |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    type_text(
+        """
+        ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
+                  WHAT IS YOUR NAME?      
+        ▙ ▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▟
+
                 How should we call you?
-    """)
+
+    """
+    )
     name = input("> ").capitalize()
     myPlayer.name = name
-    type_text("""
-        _________________________________________    
-        |           WHAT IS YOUR JOB?           |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    type_text(
+        """
+        ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
+                  WHAT IS YOUR JOB?      
+        ▙ ▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▟
+
    You can choose between Medic, Police and Tehnician.
-    """)
+
+    """
+    )
     selected_kit = input("> ").upper()
     while selected_kit not in starting_kits.keys():
-        type_text("""
-        _________________________________________    
-        |     TRY AGAIN! WHAT IS YOUR JOB?      |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+        type_text(
+            """
+        ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
+             TRY AGAIN! WHAT IS YOUR JOB?      
+        ▙ ▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▟
    You can choose between Medic, Police and Tehnician.
  Make sure you type the correct job name as written above!
-    """)
+    """
+        )
         selected_kit = input("> ").upper()
     myPlayer.starting_kit = selected_kit
-    #once the player chooses the kit we will store it in data/character.json
+    # once the player chooses the kit we will store it in data/character.json
     player[selected_kit] = {
         "potions": starting_kits[selected_kit]["POTIONS"],
         "bullet": starting_kits[selected_kit]["BULLETS"],
@@ -70,25 +80,23 @@ def setup_game():
         "letter": starting_kits[selected_kit]["LETTERS"],
         "food": starting_kits[selected_kit]["FOOD"],
     }
-    write('data/character.json', player)
-    #to print their inventories
+    write("data/character.json", player)
+    # to print their inventories
     starting_potions = starting_kits[selected_kit]["POTIONS"]
     starting_bullets = starting_kits[selected_kit]["BULLETS"]
     starting_keys = starting_kits[selected_kit]["KEYS"]
-    starting_clues= starting_kits[selected_kit]["CLUES"]
-    starting_letters = starting_kits[selected_kit]["LETTERS"]
-    starting_food = starting_kits[selected_kit]["FOOD"]
 
-    type_text(f"""
-        ╔. ~༻༺~ .═══════════════════════════════╗
-                YOU ARE NOW A {myPlayer.starting_kit}
-        ╚═══════════════════════════════. ~༻༺~ .╝
+    type_text(
+        f"""
+        ◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+                  YOU ARE NOW A {myPlayer.starting_kit}
+        ◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
             You will start with {starting_potions} potions,
                 {starting_bullets} bullets and {starting_keys} keys
                 in your inventory!
 
-        The game will start in 5 seconds.....
-""")
+"""
+    )
 
     loading(delay=5, text=loads)

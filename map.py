@@ -1,8 +1,5 @@
-from character import *
-from inventory import *
-from methods import *
-
-
+from character import myPlayer, get_inventory, set_inventory, get_job
+import screens.menu as menu
 
 
 ############ MAP #############
@@ -12,21 +9,11 @@ from methods import *
 #      |   |--a5   c4--c5--c6
 #  b5  a3--a4       |
 #   |      |--b1   c3--d1--d2
-#   |      |       |   
+#   |      |       |
 #  b4--b3--b2--c1--c2--e1--e2--e3
 
-myPlayer = Player()
 
-
-#Player selects 1,2,3 or 4 from prompt menu. each value calls for player_movement("North"..etc)
-
-### --> the method must be called with player_movement("North") or "South" or "East" or "West"
-
-##program checks if north location is available and changes the player position if possible.
-
-#Then calls the method to display player description welcome()
 def player_movement(direction):
-    myPlayer = Player()
     if direction == "North":
         destination = zonemap[myPlayer.location]["NORTH"]
         if not zonemap[myPlayer.location]["NORTH"]:
@@ -72,16 +59,19 @@ def player_movement(direction):
             myPlayer.location = zonemap[myPlayer.location]["WEST"]
             welcome()
 
+
 def wrong_direction():
-    print("""
+    print(
+        """
 _________________________________________________________
 |                                                        |
 |             Where do you want to go now?               |
 |     [s] South  | [n] North | [w] West | [e] East       |
 |________________________________________________________|
-    """)
+    """
+    )
     answer = input("> ")
-    while not answer in ["s","n","w","e"]:
+    while not answer in ["s", "n", "w", "e"]:
         print("------Please select from the available directions above------")
         answer = input("> ")
     if answer == "s":
@@ -99,7 +89,8 @@ _________________________________________________________
 
 def unlock(destination):
     job = get_job()
-    print('''
+    print(
+        '''
    ad8888888888ba
   dP'         `"8b,
   8  ,aaa,       "Y888a     ,aaaa,     ,aaa,  ,aa,
@@ -114,276 +105,300 @@ def unlock(destination):
 
                     > [yes]
                     > [no]
-    ''')
+    '''
+    )
     answer = input("> ").lower()
     while not answer in ["yes", "no"]:
         print("------Please select from the available options above------")
         answer = input("> ").lower()
     if answer == "yes":
-      #check for key in inventory
-      slot3 = int(get_inventory(job,"keys"))
-      if slot3 > 0:
-        new_slot = slot3 - 1
-        set_inventory(job, "keys", new_slot)
-        zonemap[destination]["LOCKED"] = False
-        myPlayer.location = destination
-        welcome()
-      else:
-        print ("-------[!] You do not have a key to unlock this area! [!]-------")
-        wrong_direction()
+        # check for key in inventory
+        slot3 = int(get_inventory(job, "keys"))
+        if slot3 > 0:
+            new_slot = slot3 - 1
+            set_inventory(job, "keys", new_slot)
+            zonemap[destination]["LOCKED"] = False
+            myPlayer.location = destination
+            welcome()
+        else:
+            print("-------[!] You do not have a key to unlock this area! [!]-------")
+            wrong_direction()
     elif answer == "no":
-      wrong_direction()
+        wrong_direction()
 
 
 def welcome():
     description = zonemap[myPlayer.location]["DESCRIPTION"]
-    print(f"""
+    print(
+        f"""
     
     ----------------[{myPlayer.location}]---------------
     {description}
     
-    """)
-    game_menu()
+    """
+    )
+    menu.game_menu()
+
 
 zonemap = {
-            "a1": {
-          "NAME": "Home",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "",
-          "EAST": "a2"},
-            "a2": {
-          "NAME": "a2",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "a3",
-          "WEST": "a1",
-          "EAST": ""},
-            "a3": {
-          "NAME": "a3",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "a2",
-          "SOUTH": "",
-          "WEST": "",
-          "EAST": "a4"},
-            "a4": {
-          "NAME": "a4",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "a5",
-          "SOUTH": "b2",
-          "WEST": "a3",
-          "EAST": "b1"},
-            "a5": {
-          "NAME": "a5",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "a4",
-          "WEST": "",
-          "EAST": ""},
-            "b1": {
-          "NAME": "b1",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "a4",
-          "EAST": ""},
-            "b2": {
-          "NAME": "b2",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "a4",
-          "SOUTH": "",
-          "WEST": "b3",
-          "EAST": "c1"},
-            "b3": {
-          "NAME": "b3",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "b4",
-          "EAST": "b2"},
-            "b4": {
-          "NAME": "b4",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "b5",
-          "SOUTH": "",
-          "WEST": "",
-          "EAST": "b3"},
-            "c1": {
-          "NAME": "c1",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "b2",
-          "EAST": "c2"},
-            "c2": {
-          "NAME": "c2",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "c3",
-          "SOUTH": "",
-          "WEST": "c1",
-          "EAST": "e1"},
-            "c3": {
-          "NAME": "c3",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "c4",
-          "SOUTH": "c2",
-          "WEST": "",
-          "EAST": "d1"},
-            "c4": {
-          "NAME": "c4",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "c3",
-          "WEST": "",
-          "EAST": "c5"},
-            "c5": {
-          "NAME": "c5",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "c4",
-          "EAST": "c6"},
-            "c6": {
-          "NAME": "c6",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "c5",
-          "EAST": ""},
-            "e1": {
-          "NAME": "e1",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "c2",
-          "EAST": "e2"},
-            "e2": {
-          "NAME": "e2",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "e1",
-          "EAST": "e3"},
-            "e3": {
-          "NAME": "e3",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "e2",
-          "EAST": ""},
-            "d1": {
-          "NAME": "d1",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "c3",
-          "EAST": "d2"},
-            "d2": {
-          "NAME": "d2",
-          "DESCRIPTION": "description",
-          "EXAMINED": True,
-          "LOOT": [],
-          "ENEMIES": [],
-          "LOCKED": False,
-          "NPC": [], 
-          "NORTH": "",
-          "SOUTH": "",
-          "WEST": "d1",
-          "EAST": ""},
+    "a1": {
+        "NAME": "Home",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "",
+        "EAST": "a2",
+    },
+    "a2": {
+        "NAME": "a2",
+        "DESCRIPTION": "The",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "a3",
+        "WEST": "a1",
+        "EAST": "",
+    },
+    "a3": {
+        "NAME": "a3",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "a2",
+        "SOUTH": "",
+        "WEST": "",
+        "EAST": "a4",
+    },
+    "a4": {
+        "NAME": "a4",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "a5",
+        "SOUTH": "b2",
+        "WEST": "a3",
+        "EAST": "b1",
+    },
+    "a5": {
+        "NAME": "a5",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "a4",
+        "WEST": "",
+        "EAST": "",
+    },
+    "b1": {
+        "NAME": "b1",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "a4",
+        "EAST": "",
+    },
+    "b2": {
+        "NAME": "b2",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "a4",
+        "SOUTH": "",
+        "WEST": "b3",
+        "EAST": "c1",
+    },
+    "b3": {
+        "NAME": "b3",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "b4",
+        "EAST": "b2",
+    },
+    "b4": {
+        "NAME": "b4",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "b5",
+        "SOUTH": "",
+        "WEST": "",
+        "EAST": "b3",
+    },
+    "c1": {
+        "NAME": "c1",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "b2",
+        "EAST": "c2",
+    },
+    "c2": {
+        "NAME": "c2",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "c3",
+        "SOUTH": "",
+        "WEST": "c1",
+        "EAST": "e1",
+    },
+    "c3": {
+        "NAME": "c3",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "c4",
+        "SOUTH": "c2",
+        "WEST": "",
+        "EAST": "d1",
+    },
+    "c4": {
+        "NAME": "c4",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "c3",
+        "WEST": "",
+        "EAST": "c5",
+    },
+    "c5": {
+        "NAME": "c5",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "c4",
+        "EAST": "c6",
+    },
+    "c6": {
+        "NAME": "c6",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "c5",
+        "EAST": "",
+    },
+    "e1": {
+        "NAME": "e1",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "c2",
+        "EAST": "e2",
+    },
+    "e2": {
+        "NAME": "e2",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "e1",
+        "EAST": "e3",
+    },
+    "e3": {
+        "NAME": "e3",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "e2",
+        "EAST": "",
+    },
+    "d1": {
+        "NAME": "d1",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "c3",
+        "EAST": "d2",
+    },
+    "d2": {
+        "NAME": "d2",
+        "DESCRIPTION": "description",
+        "EXAMINED": True,
+        "LOOT": [],
+        "ENEMIES": [],
+        "LOCKED": False,
+        "NPC": [],
+        "NORTH": "",
+        "SOUTH": "",
+        "WEST": "d1",
+        "EAST": "",
+    },
 }
