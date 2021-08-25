@@ -1,5 +1,3 @@
-
-
 def text_input(prompt: str, choices: dict):
   player_input = input(prompt)
   while not player_input in choices.keys():
@@ -8,6 +6,5 @@ def text_input(prompt: str, choices: dict):
     The valid options are displayed above this error
     """)
     player_input = input(prompt)
-  else:
-    res = choices[player_input]()
-    return res
+  res = choices[player_input]()
+  return res
