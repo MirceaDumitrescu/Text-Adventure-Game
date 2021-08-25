@@ -2,6 +2,7 @@ import json
 import os
 from os import path
 from methods import write, read
+import map as m
 
 
 def create_json():
@@ -24,6 +25,24 @@ class Player:
 
 myPlayer = Player()
 player_inventory = {}
+
+class Action:
+    def __init__(self):
+        pass
+    
+    def examine(self):
+        pass
+    
+    def pick_up(self):
+        pass
+    
+    def attack(self):
+        pass
+    
+    def interact(selft):
+        pass
+    
+do = Action()
 
 
 def read_json():
@@ -57,3 +76,6 @@ def set_inventory(job, key, value):  # method to add items to inventory
     global player_inventory
     player_inventory[job][key] = value
     write("data/character.json", player_inventory)
+
+
+il avea roxi pe 
