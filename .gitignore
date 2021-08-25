@@ -142,3 +142,4 @@ test.py
 data
 *.json
 .tabnine.model
+.idea
