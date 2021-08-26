@@ -2,7 +2,6 @@ import json
 import os
 from os import path
 from methods import write, read
-import map as m
 
 
 def create_json():
@@ -25,44 +24,6 @@ class Player:
 
 myPlayer = Player()
 player_inventory = {}
-
-class Action:
-    def __init__(self):
-        pass
-    
-    def examine(self):
-        pass
-    
-    def pick_up(self):
-        pass
-    
-    def attack(self):
-        pass
-    
-    def interact(selft):
-        pass
-    
-do = Action()
-
-
-class Action:
-    def __init__(self):
-        pass
-
-    def examine(self):
-        pass
-
-    def pick_up(self):
-        pass
-
-    def attack(self):
-        pass
-
-    def interact(selft):
-        pass
-
-
-do = Action()
 
 
 def read_json():

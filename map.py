@@ -64,15 +64,16 @@ def wrong_direction():
     print(
         """
 _________________________________________________________
+|                       MAP MENU                         |
 |                                                        |
 |             Where do you want to go now?               |
 |     [s] South  | [n] North | [w] West | [e] East       |
-|               [b] Go back to Main Menu                 |
+|       [b] Go back to Main Menu  | [i] Examine          |
 |________________________________________________________|
     """
     )
     answer = input("> ")
-    while not answer.lower() in ["s", "n", "w", "e", "b"]:
+    while not answer.lower() in ["s", "n", "w", "e", "b", "i"]:
         print("------Please select from the available directions above------")
         answer = input("> ")
     if answer == "s":
@@ -89,6 +90,9 @@ _________________________________________________________
 
     elif answer == "b":
         menu.game_menu()
+
+    elif answer == "i":
+        menu.examine()
 
 
 def unlock(destination):
