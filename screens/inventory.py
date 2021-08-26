@@ -1,5 +1,5 @@
 from methods import cls, type_text, loading, loads
-from character import get_inventory, get_job, myPlayer, read_json, create_json
+from character import get_inventory, get_job, myPlayer
 import screens.menu as menu
 
 

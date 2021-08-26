@@ -67,11 +67,12 @@ _________________________________________________________
 |                                                        |
 |             Where do you want to go now?               |
 |     [s] South  | [n] North | [w] West | [e] East       |
+|               [b] Go back to Main Menu                 |
 |________________________________________________________|
     """
     )
     answer = input("> ")
-    while not answer in ["s", "n", "w", "e"]:
+    while not answer.lower() in ["s", "n", "w", "e", "b"]:
         print("------Please select from the available directions above------")
         answer = input("> ")
     if answer == "s":
@@ -85,6 +86,9 @@ _________________________________________________________
 
     elif answer == "e":
         player_movement("East")
+
+    elif answer == "b":
+        menu.game_menu()
 
 
 def unlock(destination):
@@ -157,7 +161,7 @@ zonemap = {
     "a2": {
         "NAME": "a2",
         "DESCRIPTION": "The",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -170,7 +174,7 @@ zonemap = {
     "a3": {
         "NAME": "a3",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -183,7 +187,7 @@ zonemap = {
     "a4": {
         "NAME": "a4",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -196,7 +200,7 @@ zonemap = {
     "a5": {
         "NAME": "a5",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -209,7 +213,7 @@ zonemap = {
     "b1": {
         "NAME": "b1",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -222,7 +226,7 @@ zonemap = {
     "b2": {
         "NAME": "b2",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -235,7 +239,7 @@ zonemap = {
     "b3": {
         "NAME": "b3",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -248,7 +252,7 @@ zonemap = {
     "b4": {
         "NAME": "b4",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -261,7 +265,7 @@ zonemap = {
     "c1": {
         "NAME": "c1",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -274,7 +278,7 @@ zonemap = {
     "c2": {
         "NAME": "c2",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -287,7 +291,7 @@ zonemap = {
     "c3": {
         "NAME": "c3",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -300,7 +304,7 @@ zonemap = {
     "c4": {
         "NAME": "c4",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -313,7 +317,7 @@ zonemap = {
     "c5": {
         "NAME": "c5",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -326,7 +330,7 @@ zonemap = {
     "c6": {
         "NAME": "c6",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -339,7 +343,7 @@ zonemap = {
     "e1": {
         "NAME": "e1",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -352,7 +356,7 @@ zonemap = {
     "e2": {
         "NAME": "e2",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -365,7 +369,7 @@ zonemap = {
     "e3": {
         "NAME": "e3",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -378,7 +382,7 @@ zonemap = {
     "d1": {
         "NAME": "d1",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
@@ -391,7 +395,7 @@ zonemap = {
     "d2": {
         "NAME": "d2",
         "DESCRIPTION": "description",
-        "EXAMINED": True,
+        "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
         "LOCKED": False,
