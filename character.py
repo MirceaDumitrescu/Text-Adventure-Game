@@ -96,6 +96,3 @@ def set_inventory(job, key, value):  # method to add items to inventory
     global player_inventory
     player_inventory[job][key] = value
     write("data/character.json", player_inventory)
-
-
-il avea roxi pe 
