@@ -45,6 +45,26 @@ class Action:
 do = Action()
 
 
+class Action:
+    def __init__(self):
+        pass
+
+    def examine(self):
+        pass
+
+    def pick_up(self):
+        pass
+
+    def attack(self):
+        pass
+
+    def interact(selft):
+        pass
+
+
+do = Action()
+
+
 def read_json():
     global player_inventory
     if os.path.exists("data/character.json"):
