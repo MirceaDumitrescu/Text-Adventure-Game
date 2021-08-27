@@ -1,8 +1,9 @@
-from methods import cls, type_text, loading, loads
+import methods as m
 import screens.menu as menu
 
+
 def help_game():
-    cls()
+    m.cls()
     help_info = """
 
  ____  ____  ________  _____     _______   
@@ -41,6 +42,6 @@ and see if you can find out who murdered Ardit.
         (without getting killed in the process) 
               you will finish the game.
 """
-    type_text(help_info)
-    loading(5, loads)
+    m.type_text(help_info)
+    m.loading(5, m.loads)
     menu.game_menu()

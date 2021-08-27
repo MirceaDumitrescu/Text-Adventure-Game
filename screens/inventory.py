@@ -1,16 +1,16 @@
-from methods import cls, type_text, loading, loads
-from character import get_inventory, get_job, myPlayer
+import methods as m
+import character as c
 import screens.menu as menu
 
 
 def display_inventory():
-    cls()
-    job = get_job()
+    m.cls()
+    job = c.get_job()
     inventory = f"""
 
 ===============================================================
 |                                                              |
-    Name: {myPlayer.name}      Health: {myPlayer.hp}      Location: {myPlayer.location}         
+    Name: {c.myPlayer.name}      Health: {c.myPlayer.hp}      Location: {c.myPlayer.location}         
 |                                                              |
 ===============================================================
 |                                                              |
@@ -19,11 +19,11 @@ def display_inventory():
 |                                                              |
 |                                                              |
 ===============================================================
-    [1] {get_inventory(job, "potions")} Potions                   [4] {get_inventory(job, "letter")} Letters
-    [2] {get_inventory(job, "bullet")} Bullets                   [5] {get_inventory(job, "clues")} Clues
-    [3] {get_inventory(job, "keys")} Keys                      [6] {get_inventory(job, "food")} Apples
+    [1] {c.get_inventory(job, "potions")} Potions                   [4] {c.get_inventory(job, "letter")} Letters
+    [2] {c.get_inventory(job, "bullet")} Bullets                   [5] {c.get_inventory(job, "clues")} Clues
+    [3] {c.get_inventory(job, "keys")} Keys                      [6] {c.get_inventory(job, "food")} Apples
 
 """
-    type_text(inventory)
-    loading(5, loads)
+    m.type_text(inventory)
+    m.loading(5, m.loads)
     menu.game_menu()

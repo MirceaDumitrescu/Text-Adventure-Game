@@ -1,8 +1,8 @@
 import sys
-from methods import type_text, loading, write, loads, starting_kits
-from character import myPlayer
+import character as c
 from text_input import text_input
 from screens.menu import game_menu
+import methods as m
 
 player = {}
 
@@ -29,14 +29,14 @@ def welcome():
                        [1] Play <
                        [2] Quit <
 """
-    type_text(welcome)
+    m.type_text(welcome)
     menu = {"1": setup_game, "2": sys.exit}
     text_input("> ", menu)
     game_menu()
 
 
 def setup_game():
-    type_text(
+    m.type_text(
         """
         ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
                   WHAT IS YOUR NAME?      
@@ -47,8 +47,8 @@ def setup_game():
     """
     )
     name = input("> ").capitalize()
-    myPlayer.name = name
-    type_text(
+    c.myPlayer.name = name
+    m.type_text(
         """
         ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
                   WHAT IS YOUR JOB?      
@@ -59,8 +59,8 @@ def setup_game():
     """
     )
     selected_kit = input("> ").upper()
-    while selected_kit not in starting_kits.keys():
-        type_text(
+    while selected_kit not in m.starting_kits.keys():
+        m.type_text(
             """
         ▛▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝▝ ▜
              TRY AGAIN! WHAT IS YOUR JOB?      
@@ -70,26 +70,26 @@ def setup_game():
     """
         )
         selected_kit = input("> ").upper()
-    myPlayer.starting_kit = selected_kit
+    c.myPlayer.starting_kit = selected_kit
     # once the player chooses the kit we will store it in data/character.json
     player[selected_kit] = {
-        "potions": starting_kits[selected_kit]["POTIONS"],
-        "bullet": starting_kits[selected_kit]["BULLETS"],
-        "keys": starting_kits[selected_kit]["KEYS"],
-        "clues": starting_kits[selected_kit]["CLUES"],
-        "letter": starting_kits[selected_kit]["LETTERS"],
-        "food": starting_kits[selected_kit]["FOOD"],
+        "potions": m.starting_kits[selected_kit]["POTIONS"],
+        "bullet": m.starting_kits[selected_kit]["BULLETS"],
+        "keys": m.starting_kits[selected_kit]["KEYS"],
+        "clues": m.starting_kits[selected_kit]["CLUES"],
+        "letter": m.starting_kits[selected_kit]["LETTERS"],
+        "food": m.starting_kits[selected_kit]["FOOD"],
     }
-    write("data/character.json", player)
+    m.write("data/character.json", player)
     # to print their inventories
-    starting_potions = starting_kits[selected_kit]["POTIONS"]
-    starting_bullets = starting_kits[selected_kit]["BULLETS"]
-    starting_keys = starting_kits[selected_kit]["KEYS"]
+    starting_potions = m.starting_kits[selected_kit]["POTIONS"]
+    starting_bullets = m.starting_kits[selected_kit]["BULLETS"]
+    starting_keys = m.starting_kits[selected_kit]["KEYS"]
 
-    type_text(
+    m.type_text(
         f"""
         ◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
-                  YOU ARE NOW A {myPlayer.starting_kit}
+                  YOU ARE NOW A {c.myPlayer.starting_kit}
         ◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
             You will start with {starting_potions} potions,
@@ -99,4 +99,4 @@ def setup_game():
 """
     )
 
-    loading(delay=5, text=loads)
+    m.loading(delay=5, text=m.loads)
