@@ -7,6 +7,7 @@ import random
 import character as c
 import screens.menu as m
 import map as map
+from screens import inventory 
 
 
 def cls():
@@ -102,6 +103,7 @@ class Action:
 
     def random_examine(self):
         r1 = random.randint(1, 3)
+        #we need to add one more possibility for good npc
         if r1 == 1:
             do.loot_item()
             print("Loot Action rolled")
@@ -112,7 +114,9 @@ class Action:
             do.loot_item()  # to be changed
             print("Enemy Action rolled")
         else:
-            "An error with the random_examine function!"
+            # "An error with the random_examine function!"
+            print("Hello there passer, Stop")
+            self.enemy_encounter()
 
     def loot_item(self):
         possible_loot = ["potions", "bullet", "keys", "clues", "letter", "food"]
@@ -145,7 +149,49 @@ class Action:
     def enemy_encounter(self):
         print("Test2")
         # We need Enemy dialogue database with Enemy informations
+        #then we need the player to lose health depending on dialogue
+        c.myPlayer.hp -= 10
+        print(f"-{c.myPlayer.hp}")
+        #search for weapons in inventory
+        self.use_items()
         m.game_menu()
+
+    def use_items(self):
+        #showing items that can be used
+        show_inventory = inventory.display_inventory()
+        user_input = input("Select an item to use: ")
+        if "1" in user_input:
+            print("potions is equiped")
+            c.myPlayer.hp += 10
+            print(f"Your Health is {c.myPlayer.hp}")
+        elif "2" in user_input:
+            #the weapon to attach enemy npcs
+            print("bullet is equiped")
+            self.attack()
+        elif "3" in user_input:
+            #To be used around the map
+            print("key is equiped")
+        elif "4" in user_input:
+            #letters
+            print("letter is equiped")
+        elif "5" in user_input:
+            #clues
+            print("Clues are equiped")
+        elif "6" in user_input:
+            #health regain
+            print("Apples are equiped")
+            c.myPlayer.hp += 10
+            print(f"Your Health is {c.myPlayer.hp}")
+        
+    def attack(self):
+        #attacking mechanic
+        #we need text to tell us we defeated the enemy npc 
+        pass
+
+
+        
+
 
 
 do = Action()
+
