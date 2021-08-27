@@ -54,7 +54,7 @@ def setup_game():
                   WHAT IS YOUR JOB?      
         ▙ ▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▟
 
-   You can choose between Medic, Police and Tehnician.
+   You can choose between Medic, Police and Technician.
 
     """
     )
