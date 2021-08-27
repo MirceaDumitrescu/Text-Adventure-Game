@@ -1,14 +1,14 @@
 import json
 import os
 from os import path
-from methods import write, read
+import methods as m
 
 
 def create_json():
     if not path.exists("data"):
         os.mkdir("data")
     if not os.path.exists("data/character.json"):
-        write("data/character.json", {})
+        m.write("data/character.json", {})
 
 
 class Player:
@@ -49,11 +49,11 @@ def get_job():  # method to get the job of the player
 
 def get_inventory(job, key):  # method to get item in slot
     global player_inventory
-    read("data/character.json")
+    m.read("data/character.json")
     return player_inventory[job][key]
 
 
 def set_inventory(job, key, value):  # method to add items to inventory
     global player_inventory
     player_inventory[job][key] = value
-    write("data/character.json", player_inventory)
+    m.write("data/character.json", player_inventory)

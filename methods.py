@@ -3,6 +3,10 @@ import time
 import os
 import math
 import json
+import random
+import character as c
+import screens.menu as m
+import map as map
 
 
 def cls():
@@ -83,7 +87,65 @@ starting_kits = {
 
 
 loads = "Loading [▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100%"
+loads_shorter = "[▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰] 100%"
 
 
-def random_examine():
-    pass
+# Available output actions:
+# - Discover loot (Potion, Bullet, Key, Clue, Letter or Food) - also random
+# - Discover NPC - dialogue starts
+# - Initiate an encounter/attack - fight is being done via roll dice method
+
+
+class Action:
+    def __init__(self):
+        pass
+
+    def random_examine(self):
+        r1 = random.randint(1, 3)
+        if r1 == 1:
+            do.loot_item()
+            print("Loot Action rolled")
+        elif r1 == 2:
+            do.loot_item()  # to be changed
+            print("NPC Action rolled")
+        elif r1 == 3:
+            do.loot_item()  # to be changed
+            print("Enemy Action rolled")
+        else:
+            "An error with the random_examine function!"
+
+    def loot_item(self):
+        possible_loot = ["potions", "bullet", "keys", "clues", "letter", "food"]
+        r2 = random.randint(1, 3)
+        r3 = random.choice(possible_loot)
+        c.set_inventory(c.get_job(), r3, r2)
+        map.zonemap[c.myPlayer.location]["EXAMINED"] = True
+        print(
+            f"""
+              
+    ▕▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▿▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▏
+     
+                  LOOT FOUND !!!
+    
+        {r2}x {r3} was added in your inventory
+
+    ▕▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▵▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▏
+              
+              """
+        )
+        time.sleep(1)
+        loading(delay=2, text=loads_shorter)
+        m.game_menu()
+
+    def npc_encounter(self):
+        print("Test")
+        # We need NPC dialogue database with NPC informations
+        m.game_menu()
+
+    def enemy_encounter(self):
+        print("Test2")
+        # We need Enemy dialogue database with Enemy informations
+        m.game_menu()
+
+
+do = Action()

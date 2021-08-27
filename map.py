@@ -1,6 +1,5 @@
-from character import myPlayer, get_inventory, set_inventory, get_job
+import character as c
 import screens.menu as menu
-
 
 ############ MAP #############
 
@@ -15,48 +14,48 @@ import screens.menu as menu
 
 def player_movement(direction):
     if direction == "North":
-        destination = zonemap[myPlayer.location]["NORTH"]
-        if not zonemap[myPlayer.location]["NORTH"]:
+        destination = zonemap[c.myPlayer.location]["NORTH"]
+        if not zonemap[c.myPlayer.location]["NORTH"]:
             print("---------There is no available location in the North---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
-            myPlayer.location = zonemap[myPlayer.location]["NORTH"]
+            c.myPlayer.location = zonemap[c.myPlayer.location]["NORTH"]
             welcome()
     elif direction == "South":
-        destination = zonemap[myPlayer.location]["SOUTH"]
-        if not zonemap[myPlayer.location]["SOUTH"]:
+        destination = zonemap[c.myPlayer.location]["SOUTH"]
+        if not zonemap[c.myPlayer.location]["SOUTH"]:
             print("---------There is no available location in the South---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
-            myPlayer.location = zonemap[myPlayer.location]["SOUTH"]
+            c.myPlayer.location = zonemap[c.myPlayer.location]["SOUTH"]
             welcome()
     elif direction == "East":
-        destination = zonemap[myPlayer.location]["EAST"]
-        if not zonemap[myPlayer.location]["EAST"]:
+        destination = zonemap[c.myPlayer.location]["EAST"]
+        if not zonemap[c.myPlayer.location]["EAST"]:
             print("---------There is no available location in the East---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
             unlock(destination)
         else:
-            myPlayer.location = zonemap[myPlayer.location]["EAST"]
+            c.myPlayer.location = zonemap[c.myPlayer.location]["EAST"]
             welcome()
     elif direction == "West":
-        destination = zonemap[myPlayer.location]["WEST"]
-        if not zonemap[myPlayer.location]["WEST"]:
+        destination = zonemap[c.myPlayer.location]["WEST"]
+        if not zonemap[c.myPlayer.location]["WEST"]:
             print("---------There is no available location in the West---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
-            myPlayer.location = zonemap[myPlayer.location]["WEST"]
+            c.myPlayer.location = zonemap[c.myPlayer.location]["WEST"]
             welcome()
 
 
@@ -96,7 +95,7 @@ _________________________________________________________
 
 
 def unlock(destination):
-    job = get_job()
+    job = c.get_job()
     print(
         '''
    ad8888888888ba
@@ -121,12 +120,12 @@ def unlock(destination):
         answer = input("> ").lower()
     if answer == "yes":
         # check for key in inventory
-        slot3 = int(get_inventory(job, "keys"))
+        slot3 = int(c.get_inventory(job, "keys"))
         if slot3 > 0:
             new_slot = slot3 - 1
-            set_inventory(job, "keys", new_slot)
+            c.set_inventory(job, "keys", new_slot)
             zonemap[destination]["LOCKED"] = False
-            myPlayer.location = destination
+            c.myPlayer.location = destination
             welcome()
         else:
             print("-------[!] You do not have a key to unlock this area! [!]-------")
@@ -136,11 +135,11 @@ def unlock(destination):
 
 
 def welcome():
-    description = zonemap[myPlayer.location]["DESCRIPTION"]
+    description = zonemap[c.myPlayer.location]["DESCRIPTION"]
     print(
         f"""
     
-    ----------------[{myPlayer.location}]---------------
+    ----------------[{c.myPlayer.location}]---------------
     {description}
     
     """

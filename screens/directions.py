@@ -1,11 +1,11 @@
-from methods import cls, type_text
-from map import player_movement
+import methods as m
 import screens.menu as menu
+import map as map
 
 
 def get_direction():
 
-    cls()
+    m.cls()
 
     directions = """
 _________________________________________________________
@@ -16,23 +16,23 @@ _________________________________________________________
 |       [b] Go back to Main Menu  | [i] Examine          |
 |________________________________________________________|
     """
-    type_text(directions)
+    m.type_text(directions)
 
     answer = input("> ")
     while not answer.lower() in ["s", "n", "w", "e", "b", "i"]:
         print("------Please select from the available directions above------")
         answer = input("> ")
     if answer == "s":
-        player_movement("South")
+        map.player_movement("South")
 
     elif answer == "n":
-        player_movement("North")
+        map.player_movement("North")
 
     elif answer == "w":
-        player_movement("West")
+        map.player_movement("West")
 
     elif answer == "e":
-        player_movement("East")
+        map.player_movement("East")
 
     elif answer == "b":
         menu.game_menu()
