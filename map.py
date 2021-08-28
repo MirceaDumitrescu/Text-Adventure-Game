@@ -1,5 +1,6 @@
 import character as c
 import screens.menu as menu
+import methods
 
 ############ MAP #############
 
@@ -11,15 +12,14 @@ import screens.menu as menu
 #   |      |       |
 #  b4--b3--b2--c1--c2--e1--e2--e3
 
-
 def player_movement(direction):
     if direction == "North":
         destination = zonemap[c.myPlayer.location]["NORTH"]
         if not zonemap[c.myPlayer.location]["NORTH"]:
-            print("---------There is no available location in the North---------")
+            methods.type_text("---------There is no available location in the North---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
+            methods.type_text("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["NORTH"]
@@ -27,10 +27,10 @@ def player_movement(direction):
     elif direction == "South":
         destination = zonemap[c.myPlayer.location]["SOUTH"]
         if not zonemap[c.myPlayer.location]["SOUTH"]:
-            print("---------There is no available location in the South---------")
+            methods.type_text("---------There is no available location in the South---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
+            methods.type_text("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["SOUTH"]
@@ -38,10 +38,10 @@ def player_movement(direction):
     elif direction == "East":
         destination = zonemap[c.myPlayer.location]["EAST"]
         if not zonemap[c.myPlayer.location]["EAST"]:
-            print("---------There is no available location in the East---------")
+            methods.type_text("---------There is no available location in the East---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
+            methods.type_text("---------[!] This area of the map is locked. [!]---------")
             unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["EAST"]
@@ -49,10 +49,10 @@ def player_movement(direction):
     elif direction == "West":
         destination = zonemap[c.myPlayer.location]["WEST"]
         if not zonemap[c.myPlayer.location]["WEST"]:
-            print("---------There is no available location in the West---------")
+            methods.type_text("---------There is no available location in the West---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
+            methods.type_text("---------[!] This area of the map is locked. [!]---------")
             wrong_direction()
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["WEST"]
@@ -60,7 +60,7 @@ def player_movement(direction):
 
 
 def wrong_direction():
-    print(
+    methods.type_text(
         """
 _________________________________________________________
 |                       MAP MENU                         |

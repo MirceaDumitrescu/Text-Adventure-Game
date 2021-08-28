@@ -6,7 +6,7 @@ import json
 import random
 import character as c
 import screens.menu as m
-import map as map
+import map
 from screens import inventory 
 
 
@@ -76,7 +76,7 @@ starting_kits = {
         "LETTERS": 0,
         "FOOD": 0,
     },
-    "TEHNICIAN": {
+    "TECHNICIAN": {
         "POTIONS": 1,
         "BULLETS": 1,
         "KEYS": 3,
