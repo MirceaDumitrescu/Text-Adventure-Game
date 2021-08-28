@@ -24,7 +24,7 @@ __________________________________________________________
 |                                                        |
 |             What do you want to do next?               |
 |   [m] Change Location | [h] Help Menu | [i] Inventory  |
-|       [b] Go back to Main Menu  | [e] Examine          |
+|                      [e] Examine                       |
 |________________________________________________________|
     """
     m.type_text(game_options)

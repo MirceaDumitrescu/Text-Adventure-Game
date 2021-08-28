@@ -16,32 +16,65 @@ def player_movement(direction):
     if direction == "North":
         destination = zonemap[c.myPlayer.location]["NORTH"]
         if not zonemap[c.myPlayer.location]["NORTH"]:
+<<<<<<< Updated upstream
             print("---------There is no available location in the North---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
+=======
+            methods.type_text(
+                "---------There is no available location in the North---------"
+            )
+>>>>>>> Stashed changes
             wrong_direction()
+        elif zonemap[destination]["LOCKED"] == True:
+            methods.type_text(
+                "---------[!] This area of the map is locked. [!]---------"
+            )
+            unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["NORTH"]
             welcome()
     elif direction == "South":
         destination = zonemap[c.myPlayer.location]["SOUTH"]
         if not zonemap[c.myPlayer.location]["SOUTH"]:
+<<<<<<< Updated upstream
             print("---------There is no available location in the South---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
+=======
+            methods.type_text(
+                "---------There is no available location in the South---------"
+            )
+>>>>>>> Stashed changes
             wrong_direction()
+        elif zonemap[destination]["LOCKED"] == True:
+            methods.type_text(
+                "---------[!] South area of the map is locked. [!]---------"
+            )
+            unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["SOUTH"]
             welcome()
     elif direction == "East":
         destination = zonemap[c.myPlayer.location]["EAST"]
         if not zonemap[c.myPlayer.location]["EAST"]:
+<<<<<<< Updated upstream
             print("---------There is no available location in the East---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
+=======
+            methods.type_text(
+                "---------There is no available location in the East---------"
+            )
+            wrong_direction()
+        elif zonemap[destination]["LOCKED"] == True:
+            methods.type_text(
+                "---------[!] This area of the map is locked. [!]---------"
+            )
+>>>>>>> Stashed changes
             unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["EAST"]
@@ -49,11 +82,22 @@ def player_movement(direction):
     elif direction == "West":
         destination = zonemap[c.myPlayer.location]["WEST"]
         if not zonemap[c.myPlayer.location]["WEST"]:
+<<<<<<< Updated upstream
             print("---------There is no available location in the West---------")
             wrong_direction()
         elif zonemap[destination]["LOCKED"] is False:
             print("---------[!] This area of the map is locked. [!]---------")
+=======
+            methods.type_text(
+                "---------There is no available location in the West---------"
+            )
+>>>>>>> Stashed changes
             wrong_direction()
+        elif zonemap[destination]["LOCKED"] == True:
+            methods.type_text(
+                "---------[!] This area of the map is locked. [!]---------"
+            )
+            unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["WEST"]
             welcome()
@@ -135,12 +179,20 @@ def unlock(destination):
 
 
 def welcome():
+    zonemap_name = zonemap[c.myPlayer.location]["NAME"]
     description = zonemap[c.myPlayer.location]["DESCRIPTION"]
+    if zonemap[c.myPlayer.location]["EXAMINED"] == True:
+        examination = "No, everything seems where it should be!"
+    else:
+        examination = "You haven't checked this place yet. You should try!"
     print(
         f"""
     
-    ----------------[{c.myPlayer.location}]---------------
+    ----------------[{zonemap_name}]---------------
     {description}
+    
+    Is there anything to examin here?
+    > {examination}
     
     """
     )
@@ -149,8 +201,10 @@ def welcome():
 
 zonemap = {
     "a1": {
-        "NAME": "Home",
-        "DESCRIPTION": "description",
+        "NAME": "Murder Scene",
+        "DESCRIPTION": """
+    This is your start location. Usually nothing changes here. 
+    Your apartment is as dirty as its ever been.""",
         "EXAMINED": True,
         "LOOT": [],
         "ENEMIES": [],
@@ -162,8 +216,11 @@ zonemap = {
         "EAST": "a2",
     },
     "a2": {
-        "NAME": "a2",
-        "DESCRIPTION": "The",
+        "NAME": "Outside of your apartment",
+        "DESCRIPTION": """
+    The narrow hallways of the apartment block are poor lit, 
+    thus making hard to find anything or see where to go. 
+    Try a couple of doors and see what happens.""",
         "EXAMINED": False,
         "LOOT": [],
         "ENEMIES": [],
@@ -175,12 +232,15 @@ zonemap = {
         "EAST": "",
     },
     "a3": {
-        "NAME": "a3",
-        "DESCRIPTION": "description",
-        "EXAMINED": False,
+        "NAME": "Neighbour Apartment",
+        "DESCRIPTION": """
+    You knock on the door and the neighbour answers. 
+    He seems to be startled by your knock and opens 
+    the door carefully, almost as he was scared.""",
+        "EXAMINED": True,
         "LOOT": [],
         "ENEMIES": [],
-        "LOCKED": False,
+        "LOCKED": True,
         "NPC": [],
         "NORTH": "a2",
         "SOUTH": "",
