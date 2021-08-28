@@ -11,7 +11,7 @@ Style = Futuristic Dystopia...
 --------------
 Objective = Complete main quest storyline
 --------------
-Starting_kits = [Medic, Police, Tehnician]
+Starting_kits = [Medic, Police, Technician]
 --------------
 Map_stype = Dungeon Crawler
 --------------
@@ -30,11 +30,11 @@ Map design and lore: map.html (open with browser to view it correctly)
 
 #### Scope_of_game #### 
 
-Discover the mistery behind the murder of Ardit, the scientist. Ardit was the brother of the Medic, lover of the Police officer and best friend of the Tehnician. Embark into this mistery from all three perspectives and see if you can find out who murdered Ardit.
+Discover the mistery behind the murder of Ardit, the scientist. Ardit was the brother of the Medic, lover of the Police officer and best friend of the Technician. Embark into this mistery from all three perspectives and see if you can find out who murdered Ardit.
 
 #### game_ending ####
 
-You do not discover the murderer in time and he kills you before that. There are three different endings based on the starting character you choose. Police officer will arrest or shoot the murderer, the medic will call the police officer and the Tehnician will kill him.    
+You do not discover the murderer in time and he kills you before that. There are three different endings based on the starting character you choose. Police officer will arrest or shoot the murderer, the medic will call the police officer and the Technician will kill him.    
 
    _____                         ____                 _ 
   / ____|                       / __ \               | |
