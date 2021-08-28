@@ -1,5 +1,6 @@
 import character as c
 import screens.menu as menu
+import methods
 
 ############ MAP #############
 
@@ -16,16 +17,9 @@ def player_movement(direction):
     if direction == "North":
         destination = zonemap[c.myPlayer.location]["NORTH"]
         if not zonemap[c.myPlayer.location]["NORTH"]:
-<<<<<<< Updated upstream
-            print("---------There is no available location in the North---------")
-            wrong_direction()
-        elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
-=======
             methods.type_text(
                 "---------There is no available location in the North---------"
             )
->>>>>>> Stashed changes
             wrong_direction()
         elif zonemap[destination]["LOCKED"] == True:
             methods.type_text(
@@ -38,16 +32,9 @@ def player_movement(direction):
     elif direction == "South":
         destination = zonemap[c.myPlayer.location]["SOUTH"]
         if not zonemap[c.myPlayer.location]["SOUTH"]:
-<<<<<<< Updated upstream
-            print("---------There is no available location in the South---------")
-            wrong_direction()
-        elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
-=======
             methods.type_text(
                 "---------There is no available location in the South---------"
             )
->>>>>>> Stashed changes
             wrong_direction()
         elif zonemap[destination]["LOCKED"] == True:
             methods.type_text(
@@ -60,12 +47,6 @@ def player_movement(direction):
     elif direction == "East":
         destination = zonemap[c.myPlayer.location]["EAST"]
         if not zonemap[c.myPlayer.location]["EAST"]:
-<<<<<<< Updated upstream
-            print("---------There is no available location in the East---------")
-            wrong_direction()
-        elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
-=======
             methods.type_text(
                 "---------There is no available location in the East---------"
             )
@@ -74,7 +55,6 @@ def player_movement(direction):
             methods.type_text(
                 "---------[!] This area of the map is locked. [!]---------"
             )
->>>>>>> Stashed changes
             unlock(destination)
         else:
             c.myPlayer.location = zonemap[c.myPlayer.location]["EAST"]
@@ -82,16 +62,9 @@ def player_movement(direction):
     elif direction == "West":
         destination = zonemap[c.myPlayer.location]["WEST"]
         if not zonemap[c.myPlayer.location]["WEST"]:
-<<<<<<< Updated upstream
-            print("---------There is no available location in the West---------")
-            wrong_direction()
-        elif zonemap[destination]["LOCKED"] is False:
-            print("---------[!] This area of the map is locked. [!]---------")
-=======
             methods.type_text(
                 "---------There is no available location in the West---------"
             )
->>>>>>> Stashed changes
             wrong_direction()
         elif zonemap[destination]["LOCKED"] == True:
             methods.type_text(
@@ -104,7 +77,7 @@ def player_movement(direction):
 
 
 def wrong_direction():
-    print(
+    methods.type_text(
         """
 _________________________________________________________
 |                       MAP MENU                         |
