@@ -144,3 +144,4 @@ data
 .tabnine.model
 .idea
 Pipfile
+.DS_Store
